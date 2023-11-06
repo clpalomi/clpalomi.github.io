@@ -71,10 +71,11 @@
                     <p class="lead expansible" style="text-align: justify;">
                         <span class="expandable-text" id="expandableText">I was Born in Valparaíso</span>
                         <span class="expansible-content" id="expandableText">and I studied Industrial Engineering and Economics at the University of Chile, graduating in 2013. After that, I worked as a Research Analyst doing economic and data analysis for several years. In 2018, I moved to Barcelona to pursue a Master's degree in Theoretical and Applied Linguistics at the Universitat Pompeu Fabra.  I'm currently doing my PhD under the supervision of Professor <a href="https://www.icrea.cat/Web/ScientificStaff/wolfram-hinzen-565">Wolfram Hinzen</a>, where I'm researching the use of narrative coherence and disfluency as clinical markers of cognitive dysfunctions.</span>
-                
+                    </p>
+
                     <script>
                         document.addEventListener('DOMContentLoaded', function() {
-                            const expandableText = document.querySelector('.expandable-text');
+                            const expandableText = document.getElementById('expandableText');
                             const content = document.querySelector('.expansible-content');
 
                             expandableText.addEventListener('click', function() {
