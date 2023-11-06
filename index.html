@@ -14,6 +14,20 @@
         <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
+
+        <title>Expansible Text</title>
+        <style>
+            .expansible {
+                cursor: pointer;
+            }
+            .expansible-content {
+                display: none;
+            }
+            .expansible-content.active {
+                display: block;
+            }
+        </style>
+        
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -46,8 +60,22 @@
                         Roc Boronat, 138 · 08018 Barcelona ·
                         <a href="mailto:name@email.com">claudio.palominos@upf.edu</a>
                     </div>
-                    <p class="lead mb-5" style="text-align: justify;">I was Born in Valparaíso and I studied Industrial Engineering and Economics at the University of Chile, graduating in 2013. After that, I worked as a Research Analyst doing economic and data analysis for several years. In 2018, I moved to Barcelona to pursue a Master's degree in Theoretical and Applied Linguistics at the Universitat Pompeu Fabra.  I'm currently doing my PhD under the supervision of Professor <a href="https://www.icrea.cat/Web/ScientificStaff/wolfram-hinzen-565">Wolfram Hinzen</a>, where I'm researching the use of narrative coherence and disfluency as clinical markers of cognitive dysfunctions.</p>
-                    <p class="lead mb-5" style="text-align: justify;">Currently, my research interests are focused on narrative structures, as well as semantic and referential meaning in clinical populations with schizophrenia and related psychotic disorders. My aim is to understand how various linguistic devices function in these individuals, while also highlighting the contrasts with neurotypical individuals. To achieve this goal, I utilize NLP computational tools and typically program in Python and Stata.</p>
+                    <p class="lead mb-5 expansible" style="text-align: justify;">I was Born in Valparaíso and I studied Industrial Engineering and Economics at the University of Chile, graduating in 2013. After that, I worked as a Research Analyst doing economic and data analysis for several years. In 2018, I moved to Barcelona to pursue a Master's degree in Theoretical and Applied Linguistics at the Universitat Pompeu Fabra.  I'm currently doing my PhD under the supervision of Professor <a href="https://www.icrea.cat/Web/ScientificStaff/wolfram-hinzen-565">Wolfram Hinzen</a>, where I'm researching the use of narrative coherence and disfluency as clinical markers of cognitive dysfunctions.<span class="expansible-content">Click to expand</span></p>
+                    <p class="lead mb-5 expansible" style="text-align: justify;">Currently, my research interests are focused on narrative structures, as well as semantic and referential meaning in clinical populations with schizophrenia and related psychotic disorders. My aim is to understand how various linguistic devices function in these individuals, while also highlighting the contrasts with neurotypical individuals. To achieve this goal, I utilize NLP computational tools and typically program in Python and Stata.</p>
+
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const expansibleElements = document.querySelectorAll('.expansible');
+
+                            expansibleElements.forEach(element => {
+                                element.addEventListener('click', function() {
+                                    const content = element.querySelector('.expansible-content');
+                                    content.classList.toggle('active');
+                                });
+                            });
+                        });
+                    </script>
+                    
                     <div class="social-icons">
                         <a class="social-icon" href="https://www.linkedin.com/in/claudio-palominos-flores-266698139/"><i class="fab fa-linkedin-in"></i></a>
                         <a class="social-icon" href="https://github.com/clpalomi"><i class="fab fa-github"></i></a>
