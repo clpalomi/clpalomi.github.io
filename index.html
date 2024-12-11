@@ -37,7 +37,12 @@
                 text-decoration: underline;
             }
 
-            
+            .twitter-frame {
+                position: absolute;
+                top: 150px;
+                left: 10px;
+                max-width: 300px;
+            }
         </style>
         
     </head>
@@ -58,6 +63,19 @@
                 </ul>
             </div>
         </nav>
+
+        <!-- Twitter Frame -->
+        <div class="twitter-frame">
+            <a class="twitter-timeline" 
+               data-theme="light" 
+               data-width="300" 
+               data-height="400" 
+               href="https://twitter.com/PossiblyHuman_">
+               Tweets by @PossiblyHuman_
+            </a>
+            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </div>
+        
         <!-- Page Content-->
         <div class="container-fluid p-0">
             <!-- About-->
