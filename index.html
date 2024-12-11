@@ -38,11 +38,13 @@
             }
 
             .twitter-frame {
-                position: absolute;
-                top: 150px;
+                position: fixed;
+                top: 70px;
                 left: 10px;
                 max-width: 300px;
+                z-index: 1000;
             }
+
         </style>
         
     </head>
@@ -67,11 +69,11 @@
         <!-- Twitter Frame -->
         <div class="twitter-frame">
             <a class="twitter-timeline" 
-               data-theme="light" 
-               data-width="300" 
-               data-height="400" 
-               href="https://twitter.com/PossiblyHuman_">
-               Tweets by @PossiblyHuman_
+                data-theme="light" 
+                data-width="300" 
+                data-height="400" 
+                href="https://twitter.com/PossiblyHuman_">
+                Tweets by @PossiblyHuman_
             </a>
             <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
         </div>
