@@ -43,24 +43,25 @@
         <div style="text-align:right"><button id="signout" type="button">Sign out</button></div>
       </div>
 
-      <form id="save-form" class="row">
+    <div class="row">
         <div>
           <label for="minutes">Minutes</label>
-          <input id="minutes" type="number" min="0" step="1" placeholder="e.g., 30" required />
+          <input id="minutes" type="number" min="0" step="1" placeholder="e.g., 30" />
         </div>
         <div>
           <label for="language">Language</label>
-          <input id="language" type="text" list="langs" placeholder="e.g., German" required />
+          <input id="language" type="text" list="langs" placeholder="e.g., German" />
           <datalist id="langs">
             <option>German</option><option>Russian</option><option>Georgian</option>
             <option>Spanish</option><option>English</option><option>French</option><option>Italian</option>
           </datalist>
         </div>
-        <div style="grid-column: 1 / -1; margin-top:12px">
-          <button id="save" type="submit">Save (upsert)</button>
-          <span id="status" class="muted"></span>
-        </div>
-      </form>
+      </div>
+
+      <div style="margin-top:12px">
+        <button id="save" type="button">Save (upsert)</button>
+        <span id="status" class="muted"></span>
+      </div>
 
       <h3 style="margin-top:24px">Your entries for today</h3>
       <table>
@@ -89,12 +90,7 @@
   const authForm  = document.getElementById('auth-form');
   const emailEl   = document.getElementById('email');
   const authMsg   = document.getElementById('auth-msg');
-  const sendBtn   = document.getElementById('send-link');
-
   const todayEl   = document.getElementById('today');
-  const signoutEl = document.getElementById('signout');
-
-  const saveForm  = document.getElementById('save-form');
   const minutesEl = document.getElementById('minutes');
   const languageEl= document.getElementById('language');
   const statusEl  = document.getElementById('status');
@@ -118,16 +114,17 @@
   // Send magic link (click or Enter via form submit)
   authForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    const btn = document.getElementById('send-link');
     const email = emailEl.value.trim();
     if (!email) { authMsg.textContent = 'Enter a valid email.'; return; }
 
-    sendBtn.disabled = true;
+    btn.disabled = true;
     authMsg.textContent = 'Sending…';
     try {
       const { error } = await supabase.auth.signInWithOtp({
         email,
         options: {
-          // MUST be allowed in Supabase Auth → URL Configuration → Redirect URLs
+          // MUST be listed in Supabase Auth → URL Configuration → Redirect URLs
           emailRedirectTo: window.location.origin + window.location.pathname
         }
       });
@@ -137,7 +134,7 @@
       console.error(err);
       authMsg.textContent = 'Error: ' + err.message;
     } finally {
-      sendBtn.disabled = false;
+      btn.disabled = false;
     }
   });
 
@@ -149,8 +146,7 @@
   });
 
   // Save (UPSERT) — works on click or Enter (form submit)
-  saveForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
+  document.getElementById('save').addEventListener('click', async () => {
     statusEl.textContent = 'Saving…';
     const minutes = parseInt(minutesEl.value, 10);
     const language = (languageEl.value || '').trim();
@@ -158,23 +154,22 @@
       statusEl.textContent = 'Enter minutes ≥ 0 and a language.'; return;
     }
 
-    const payload = [{ date: todayES(), language, minutes }]; // user_id filled by DB default
+    // We rely on RLS + default auth.uid() on user_id server-side.
+    const payload = [{ date: todayES(), language, minutes }];
 
     const { error } = await supabase
       .from('entries')
       .upsert(payload, { onConflict: 'date,language,user_id' });
 
-    if (error) {
-      console.error(error);
-      statusEl.textContent = 'Error: ' + error.message;
-      return;
+    statusEl.textContent = error ? ('Error: ' + error.message) : 'Saved';
+    if (!error) {
+      minutesEl.value = '';
+      languageEl.value = '';
+      await loadToday();
     }
-    statusEl.textContent = 'Saved';
-    minutesEl.value = '';
-    languageEl.value = '';
-    await loadToday();
   });
 
+  
   // Load current user's rows for today (needs SELECT RLS policy allowing own rows)
   async function loadToday() {
     rowsEl.innerHTML = '';
