@@ -119,7 +119,7 @@
     if (!email) { authMsg.textContent = 'Enter a valid email.'; return; }
 
     btn.disabled = true;
-    authMsg.textContent = 'Sending…';
+    authMsg.textContent = 'Sending...';
     try {
       const { error } = await supabase.auth.signInWithOtp({
         email,
