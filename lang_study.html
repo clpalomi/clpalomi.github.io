@@ -27,38 +27,40 @@
 
     <!-- Auth panel -->
     <div id="auth-panel">
-      <label for="email">Email</label>
-      <input id="email" type="email" placeholder="you@example.com" />
-      <button id="send-link">Send magic link</button>
+      <form id="auth-form">
+        <label for="email">Email</label>
+        <input id="email" type="email" placeholder="you@example.com" required />
+        <button id="send-link" type="submit">Send magic link</button>
+      </form>
       <p class="muted" id="auth-msg"></p>
     </div>
 
-    <!-- App panel (visible after login) -->
+    
+     <!-- App panel (visible after login) -->
     <div id="app-panel" class="hidden">
       <div class="row">
         <div><strong>Today:</strong> <span id="today"></span></div>
-        <div style="text-align:right"><button id="signout">Sign out</button></div>
+        <div style="text-align:right"><button id="signout" type="button">Sign out</button></div>
       </div>
 
-      <div class="row">
+      <form id="save-form" class="row">
         <div>
           <label for="minutes">Minutes</label>
-          <input id="minutes" type="number" min="0" step="1" placeholder="e.g., 30" />
+          <input id="minutes" type="number" min="0" step="1" placeholder="e.g., 30" required />
         </div>
         <div>
           <label for="language">Language</label>
-          <input id="language" type="text" list="langs" placeholder="e.g., German" />
+          <input id="language" type="text" list="langs" placeholder="e.g., German" required />
           <datalist id="langs">
             <option>German</option><option>Russian</option><option>Georgian</option>
             <option>Spanish</option><option>English</option><option>French</option><option>Italian</option>
           </datalist>
         </div>
-      </div>
-
-      <div style="margin-top:12px">
-        <button id="save">Save (upsert)</button>
-        <span id="status" class="muted"></span>
-      </div>
+        <div style="grid-column: 1 / -1; margin-top:12px">
+          <button id="save" type="submit">Save (upsert)</button>
+          <span id="status" class="muted"></span>
+        </div>
+      </form>
 
       <h3 style="margin-top:24px">Your entries for today</h3>
       <table>
@@ -67,6 +69,7 @@
       </table>
     </div>
   </div>
+  
 
 <script>
   // === CONFIG: fill these from Supabase Settings → API ===
@@ -76,17 +79,22 @@
   // Supabase client (uses anon key in the browser)
   const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  // Helper: Europe/Madrid "YYYY-MM-DD"
-  function todayES() {
-    return new Intl.DateTimeFormat('en-CA',{ timeZone:'Europe/Madrid' }).format(new Date());
-  }
+  // Europe/Madrid "YYYY-MM-DD"
+  const todayES = () => new Intl.DateTimeFormat('en-CA',{ timeZone:'Europe/Madrid' }).format(new Date());
 
   // UI elems
   const authPanel = document.getElementById('auth-panel');
   const appPanel  = document.getElementById('app-panel');
+
+  const authForm  = document.getElementById('auth-form');
   const emailEl   = document.getElementById('email');
   const authMsg   = document.getElementById('auth-msg');
+  const sendBtn   = document.getElementById('send-link');
+
   const todayEl   = document.getElementById('today');
+  const signoutEl = document.getElementById('signout');
+
+  const saveForm  = document.getElementById('save-form');
   const minutesEl = document.getElementById('minutes');
   const languageEl= document.getElementById('language');
   const statusEl  = document.getElementById('status');
@@ -107,35 +115,42 @@
     }
   }
 
-  // Send magic link
-  document.getElementById('send-link').addEventListener('click', async () => {
-    const btn = document.getElementById('send-link');
-    const msg = document.getElementById('auth-msg');
-    const email = document.getElementById('email').value.trim();
-    if (!email) { msg.textContent = 'Enter a valid email.'; return; }
-    authMsg.textContent = 'Sending…';
+  // Send magic link (click or Enter via form submit)
+  authForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
     const email = emailEl.value.trim();
+    if (!email) { authMsg.textContent = 'Enter a valid email.'; return; }
 
-    // IMPORTANT: set your site URL as an allowed redirect in Supabase Auth settings.
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: {
-        emailRedirectTo: window.location.origin + window.location.pathname
-      }
-    });
-    authMsg.textContent = error ? ('Error: ' + error.message) :
-      'Check your email for the magic link.';
+    sendBtn.disabled = true;
+    authMsg.textContent = 'Sending…';
+    try {
+      const { error } = await supabase.auth.signInWithOtp({
+        email,
+        options: {
+          // MUST be allowed in Supabase Auth → URL Configuration → Redirect URLs
+          emailRedirectTo: window.location.origin + window.location.pathname
+        }
+      });
+      if (error) throw error;
+      authMsg.textContent = 'Check your email for the magic link.';
+    } catch (err) {
+      console.error(err);
+      authMsg.textContent = 'Error: ' + err.message;
+    } finally {
+      sendBtn.disabled = false;
+    }
   });
 
   // Sign out
-  document.getElementById('signout').addEventListener('click', async () => {
+  signoutEl.addEventListener('click', async () => {
     await supabase.auth.signOut();
     rowsEl.innerHTML = '';
     await refreshUI();
   });
 
-  // Save (UPSERT by date, language, user_id)
-  document.getElementById('save').addEventListener('click', async () => {
+  // Save (UPSERT) — works on click or Enter (form submit)
+  saveForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
     statusEl.textContent = 'Saving…';
     const minutes = parseInt(minutesEl.value, 10);
     const language = (languageEl.value || '').trim();
@@ -143,22 +158,24 @@
       statusEl.textContent = 'Enter minutes ≥ 0 and a language.'; return;
     }
 
-    // We rely on RLS + default auth.uid() on user_id server-side.
-    const payload = [{ date: todayES(), language, minutes }];
+    const payload = [{ date: todayES(), language, minutes }]; // user_id filled by DB default
 
     const { error } = await supabase
       .from('entries')
       .upsert(payload, { onConflict: 'date,language,user_id' });
 
-    statusEl.textContent = error ? ('Error: ' + error.message) : 'Saved';
-    if (!error) {
-      minutesEl.value = '';
-      languageEl.value = '';
-      await loadToday();
+    if (error) {
+      console.error(error);
+      statusEl.textContent = 'Error: ' + error.message;
+      return;
     }
+    statusEl.textContent = 'Saved';
+    minutesEl.value = '';
+    languageEl.value = '';
+    await loadToday();
   });
 
-  // Load current user's rows for today
+  // Load current user's rows for today (needs SELECT RLS policy allowing own rows)
   async function loadToday() {
     rowsEl.innerHTML = '';
     const { data, error } = await supabase
@@ -167,8 +184,10 @@
       .eq('date', todayES())
       .order('language', { ascending: true });
 
-    if (error) { rowsEl.innerHTML = `<tr><td colspan="3">Error: ${error.message}</td></tr>`; return; }
-
+    if (error) {
+      rowsEl.innerHTML = `<tr><td colspan="3">Error: ${error.message}</td></tr>`;
+      return;
+    }
     if (!data || data.length === 0) {
       rowsEl.innerHTML = `<tr><td colspan="3" class="muted">No entries yet.</td></tr>`;
       return;
@@ -178,7 +197,7 @@
     ).join('');
   }
 
-  // Handle auth redirect and initialize UI
+  // Initialize UI and listen for auth changes
   supabase.auth.onAuthStateChange((_event, _session) => refreshUI());
   refreshUI();
 </script>
