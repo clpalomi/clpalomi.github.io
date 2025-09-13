@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Minutes & Language Logger</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 24px; }
+    .card { max-width: 720px; margin: 0 auto; border: 1px solid #ddd; border-radius: 12px; padding: 18px; }
+    h1 { margin-top: 0; }
+    label { display:block; font-size: 12px; margin: 12px 0 6px; color:#555; }
+    input, button, select { padding: 10px; border-radius: 8px; border: 1px solid #ccc; width: 100%; }
+    button { cursor: pointer; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+    th, td { border-bottom: 1px solid #eee; padding: 8px; text-align: left; }
+    .right { text-align: right; }
+    .muted { color: #666; font-size: 12px; }
+    .hidden { display: none; }
+  </style>
+  <script src="https://unpkg.com/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+  <div class="card">
+    <h1>Minutes & Language (per user)</h1>
+    <p class="muted">Date is auto-set to today. Each user has their own rows via <code>user_id</code>.</p>
+
+    <!-- Auth panel -->
+    <div id="auth-panel">
+      <label for="email">Email (magic link)</label>
+      <input id="email" type="email" placeholder="you@example.com" />
+      <button id="send-link">Send magic link</button>
+      <p class="muted" id="auth-msg"></p>
+    </div>
+
+    <!-- App panel (visible after login) -->
+    <div id="app-panel" class="hidden">
+      <div class="row">
+        <div><strong>Today:</strong> <span id="today"></span></div>
+        <div style="text-align:right"><button id="signout">Sign out</button></div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label for="minutes">Minutes</label>
+          <input id="minutes" type="number" min="0" step="1" placeholder="e.g., 30" />
+        </div>
+        <div>
+          <label for="language">Language</label>
+          <input id="language" type="text" list="langs" placeholder="e.g., German" />
+          <datalist id="langs">
+            <option>German</option><option>Russian</option><option>Georgian</option>
+            <option>Spanish</option><option>English</option><option>French</option><option>Italian</option>
+          </datalist>
+        </div>
+      </div>
+
+      <div style="margin-top:12px">
+        <button id="save">Save (upsert)</button>
+        <span id="status" class="muted"></span>
+      </div>
+
+      <h3 style="margin-top:24px">Your entries for today</h3>
+      <table>
+        <thead><tr><th>Date</th><th>Language</th><th class="right">Minutes</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </div>
+
+<script>
+  // === CONFIG: fill these from Supabase Settings → API ===
+  const SUPABASE_URL = "https://mguftvozgewqtvzqfcfa.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ndWZ0dm96Z2V3cXR2enFmY2ZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3ODU5MzQsImV4cCI6MjA3MzM2MTkzNH0.xvYTiXb7M0HoS97mn2LvgBg6LEvCJLUt_jrd0_u41nY";
+
+  // Supabase client (uses anon key in the browser)
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  // Helper: Europe/Madrid "YYYY-MM-DD"
+  function todayES() {
+    return new Intl.DateTimeFormat('en-CA',{ timeZone:'Europe/Madrid' }).format(new Date());
+  }
+
+  // UI elems
+  const authPanel = document.getElementById('auth-panel');
+  const appPanel  = document.getElementById('app-panel');
+  const emailEl   = document.getElementById('email');
+  const authMsg   = document.getElementById('auth-msg');
+  const todayEl   = document.getElementById('today');
+  const minutesEl = document.getElementById('minutes');
+  const languageEl= document.getElementById('language');
+  const statusEl  = document.getElementById('status');
+  const rowsEl    = document.getElementById('rows');
+
+  todayEl.textContent = todayES();
+
+  // Auth state handling
+  async function refreshUI() {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session?.user) {
+      authPanel.classList.add('hidden');
+      appPanel.classList.remove('hidden');
+      await loadToday();
+    } else {
+      appPanel.classList.add('hidden');
+      authPanel.classList.remove('hidden');
+    }
+  }
+
+  // Send magic link
+  document.getElementById('send-link').addEventListener('click', async () => {
+    authMsg.textContent = 'Sending…';
+    const email = emailEl.value.trim();
+    if (!email) { authMsg.textContent = 'Enter a valid email.'; return; }
+
+    // IMPORTANT: set your site URL as an allowed redirect in Supabase Auth settings.
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        emailRedirectTo: window.location.origin + window.location.pathname
+      }
+    });
+    authMsg.textContent = error ? ('Error: ' + error.message) :
+      'Check your email for the magic link.';
+  });
+
+  // Sign out
+  document.getElementById('signout').addEventListener('click', async () => {
+    await supabase.auth.signOut();
+    rowsEl.innerHTML = '';
+    await refreshUI();
+  });
+
+  // Save (UPSERT by date, language, user_id)
+  document.getElementById('save').addEventListener('click', async () => {
+    statusEl.textContent = 'Saving…';
+    const minutes = parseInt(minutesEl.value, 10);
+    const language = (languageEl.value || '').trim();
+    if (!Number.isFinite(minutes) || minutes < 0 || !language) {
+      statusEl.textContent = 'Enter minutes ≥ 0 and a language.'; return;
+    }
+
+    // We rely on RLS + default auth.uid() on user_id server-side.
+    const payload = [{ date: todayES(), language, minutes }];
+
+    const { error } = await supabase
+      .from('entries')
+      .upsert(payload, { onConflict: 'date,language,user_id' });
+
+    statusEl.textContent = error ? ('Error: ' + error.message) : 'Saved';
+    if (!error) {
+      minutesEl.value = '';
+      languageEl.value = '';
+      await loadToday();
+    }
+  });
+
+  // Load current user's rows for today
+  async function loadToday() {
+    rowsEl.innerHTML = '';
+    const { data, error } = await supabase
+      .from('entries')
+      .select('date, language, minutes')
+      .eq('date', todayES())
+      .order('language', { ascending: true });
+
+    if (error) { rowsEl.innerHTML = `<tr><td colspan="3">Error: ${error.message}</td></tr>`; return; }
+
+    if (!data || data.length === 0) {
+      rowsEl.innerHTML = `<tr><td colspan="3" class="muted">No entries yet.</td></tr>`;
+      return;
+    }
+    rowsEl.innerHTML = data.map(r =>
+      `<tr><td>${r.date}</td><td>${r.language}</td><td class="right">${r.minutes}</td></tr>`
+    ).join('');
+  }
+
+  // Handle auth redirect and initialize UI
+  supabase.auth.onAuthStateChange((_event, _session) => refreshUI());
+  refreshUI();
+</script>
+</body>
+</html>
