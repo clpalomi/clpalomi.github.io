@@ -112,38 +112,42 @@
   }
 
   // Send magic link (click or Enter via form submit)
+  window.addEventListener('error',  e => document.getElementById('auth-msg').textContent = 'JS error: ' + e.message);
+  window.addEventListener('unhandledrejection', e => document.getElementById('auth-msg').textContent = 'Promise error: ' + (e.reason?.message || e.reason));
+
+  console.log('Supabase loaded?', !!window.supabase);
+
+  const authForm = document.getElementById('auth-form');
+  const emailEl  = document.getElementById('email');
+  const authMsg  = document.getElementById('auth-msg');
+  const sendBtn  = document.getElementById('send-link');
+
+  
   authForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const btn = document.getElementById('send-link');
-    const email = emailEl.value.trim();
-    if (!email) { authMsg.textContent = 'Enter a valid email.'; return; }
+  e.preventDefault();                               // STOP page reload
+  const email = emailEl.value.trim();
+  if (!email) { authMsg.textContent = 'Enter a valid email.'; return; }
 
-    btn.disabled = true;
-    authMsg.textContent = 'Sending...';
-    try {
-      const { error } = await supabase.auth.signInWithOtp({
-        email,
-        options: {
-          // MUST be listed in Supabase Auth → URL Configuration → Redirect URLs
-          emailRedirectTo: window.location.origin + window.location.pathname
-        }
-      });
-      if (error) throw error;
-      authMsg.textContent = 'Check your email for the magic link.';
-    } catch (err) {
-      console.error(err);
-      authMsg.textContent = 'Error: ' + err.message;
-    } finally {
-      btn.disabled = false;
-    }
-  });
-
-  // Sign out
-  signoutEl.addEventListener('click', async () => {
-    await supabase.auth.signOut();
-    rowsEl.innerHTML = '';
-    await refreshUI();
-  });
+  sendBtn.disabled = true;
+  authMsg.textContent = 'Sending…';
+  try {
+    const { data, error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        // MUST be allow-listed in Supabase Auth → URL Configuration → Redirect URLs
+        emailRedirectTo: window.location.href.split('#')[0]
+      }
+    });
+    console.log('signInWithOtp result:', { data, error });
+    if (error) throw error;
+    authMsg.textContent = 'Check your email for the magic link.';
+  } catch (err) {
+    console.error(err);
+    authMsg.textContent = 'Error: ' + err.message;
+  } finally {
+    sendBtn.disabled = false;
+  }
+});
 
   // Save (UPSERT) — works on click or Enter (form submit)
   document.getElementById('save').addEventListener('click', async () => {
