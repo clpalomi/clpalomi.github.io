@@ -109,9 +109,12 @@
 
   // Send magic link
   document.getElementById('send-link').addEventListener('click', async () => {
+    const btn = document.getElementById('send-link');
+    const msg = document.getElementById('auth-msg');
+    const email = document.getElementById('email').value.trim();
+    if (!email) { msg.textContent = 'Enter a valid email.'; return; }
     authMsg.textContent = 'Sending…';
     const email = emailEl.value.trim();
-    if (!email) { authMsg.textContent = 'Enter a valid email.'; return; }
 
     // IMPORTANT: set your site URL as an allowed redirect in Supabase Auth settings.
     const { error } = await supabase.auth.signInWithOtp({
