@@ -18,7 +18,7 @@
     .muted { color: #666; font-size: 12px; }
     .hidden { display: none; }
   </style>
-  <script src="https://unpkg.com/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <!-- <script src="https://unpkg.com/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script> -->
 </head>
 <body>
   <div class="card">
@@ -160,11 +160,18 @@
     }
 
     // We rely on RLS + default auth.uid() on user_id server-side.
-    const payload = [{ date: todayES(), language, minutes }];
+    // const payload = [{ date: todayES(), language, minutes }];
+    const { data: { user } } = await supabase.auth.getUser();
+    const payload = [{ date: todayES(), language, minutes, user_id: user.id }];
 
     const { error } = await supabase
       .from('entries')
       .upsert(payload, { onConflict: 'date,language,user_id' });
+
+      const { error } = await supabase
+      .from('entries')
+      .upsert(payload, { onConflict: 'date,language,user_id' })
+      .select();
 
     statusEl.textContent = error ? ('Error: ' + error.message) : 'Saved';
     if (!error) {
