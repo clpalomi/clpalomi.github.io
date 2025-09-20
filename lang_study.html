@@ -143,7 +143,7 @@
       email,
       options: {
         // MUST be allow-listed in Supabase Auth → URL Configuration → Redirect URLs
-        emailRedirectTo: `${window.location.origin}/lang_study.html`
+        emailRedirectTo: `${window.location.origin}/auth-callback.html`
       }
     });
     console.log('signInWithOtp result:', { data, error });
