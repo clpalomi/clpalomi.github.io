@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Signing you in…</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"
+          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+  <p>Signing you in…</p>
+  <script>
+    // === same CONFIG as your main page ===
+    const SUPABASE_URL = "https://mguftvozgewqtvzqfcfa.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ndWZ0dm96Z2V3cXR2enFmY2ZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3ODU5MzQsImV4cCI6MjA3MzM2MTkzNH0.xvYTiXb7M0HoS97mn2LvgBg6LEvCJLUt_jrd0_u41nY";
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // Clean the URL fragment (tokens) for aesthetics
+    if (location.hash.includes('access_token')) {
+      history.replaceState({}, '', location.pathname);
+    }
+
+    // Wait until session exists, then go to your app page
+    (async () => {
+      const go = () => location.replace('/index.html'); // ← change if your app file is different
+      // If session already set, redirect immediately
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user) return go();
+
+      // Else wait for the SIGNED_IN event
+      supabase.auth.onAuthStateChange((event) => {
+        if (event === 'SIGNED_IN') go();
+      });
+    })();
+  </script>
+</body>
+</html>
