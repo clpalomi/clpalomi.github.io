@@ -83,6 +83,13 @@
 
   // Supabase client (uses anon key in the browser)
   const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  supabase.auth.onAuthStateChange((_event, _session) => refreshUI());
+
+  if (location.hash.includes('access_token')) {
+    // After magic-link redirect, ensure UI flips and clean the URL
+    refreshUI();
+    history.replaceState({}, '', location.pathname);
+  }
 
   // Europe/Madrid "YYYY-MM-DD"
   const todayES = () => new Intl.DateTimeFormat('en-CA',{ timeZone:'Europe/Madrid' }).format(new Date());
@@ -136,7 +143,7 @@
       email,
       options: {
         // MUST be allow-listed in Supabase Auth → URL Configuration → Redirect URLs
-        emailRedirectTo: window.location.href.split('#')[0]
+        emailRedirectTo: `${window.location.origin}/lang_study.html`
       }
     });
     console.log('signInWithOtp result:', { data, error });
@@ -202,7 +209,7 @@
   }
 
   // Initialize UI and listen for auth changes
-  supabase.auth.onAuthStateChange((_event, _session) => refreshUI());
+  // supabase.auth.onAuthStateChange((_event, _session) => refreshUI());
   refreshUI();
 </script>
 </body>
