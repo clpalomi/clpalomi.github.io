@@ -83,20 +83,28 @@
 }
 
 /* Desktop breakpoint: fixed left panel */
+/* Reserve space for the fixed sidebar on desktop */
 @media (min-width: 992px){
+  /* Shift the whole layout to the right by the sidebar width */
+  .layout{
+    padding-left: var(--sidebar-w);   /* <-- makes room for the fixed sidebar */
+  }
+
+  /* Keep the sidebar fixed and non-scrollable (or set overflow:auto if you want its own scroll) */
   .sidebar{
     position: fixed;
     top: 0; left: 0; bottom: 0;
     width: var(--sidebar-w);
-    /* If you want the sidebar content to NOT scroll at all, keep overflow: hidden;
-       If you want it to have its own scroll, use overflow: auto; */
-    overflow: hidden;  /* not movable */
+    overflow: hidden; /* or auto */
+    z-index: 10;
   }
+
+  /* Ensure content isn't also adding extra margin if you tried a margin before */
   .content{
-    padding:28px 28px 60px;
-    /* margin-left is set at ≥992px in the rule above */ 
+    margin-left: 0 !important;  /* <-- neutralize any earlier margin-left */
   }
 }
+
 
     .profile{
       display:flex; flex-direction:column; align-items:center; text-align:center;
