@@ -1,0 +1,57 @@
+[
+  {
+    "title": "A single composite index of semantic behavior tracks symptoms of psychosis over time",
+    "authors": ["Palominos, C.", "Kirdun, M.", "Nikzad, A. H.", "Spilka, M. J.", "Homan, P.", "Sommer, I. E.", "Tang, S. X.", "Hinzen, W."],
+    "venue": "Schizophrenia Research",
+    "volume": "279",
+    "issue": null,
+    "pages": "116–127",
+    "year": 2025,
+    "doi": "10.1016/j.schres.2025.03.038",
+    "url": "https://doi.org/10.1016/j.schres.2025.03.038"
+  },
+  {
+    "title": "The structure of meaning in schizophrenia: A study of spontaneous speech in Chinese",
+    "authors": ["Zhang, H.", "He, R.", "Palominos, C.", "Hsu, N.", "Cheung, H.", "Hinzen, W."],
+    "venue": "Psychiatry Research",
+    "volume": "344",
+    "issue": null,
+    "pages": "116347",
+    "year": 2025,
+    "doi": "10.1016/j.psychres.2024.116347",
+    "url": "https://doi.org/10.1016/j.psychres.2024.116347"
+  },
+  {
+    "title": "Approximating the semantic space: word embedding techniques in psychiatric speech analysis",
+    "authors": ["Palominos, C.", "He, R.", "Fröhlich, K.", "Mülfarth, R. R.", "Seuffert, S.", "Sommer, I. E.", "Kircher, T.", "Stein, F.", "Hinzen, W."],
+    "venue": "Schizophrenia",
+    "volume": "10",
+    "issue": null,
+    "pages": "114",
+    "year": 2024,
+    "doi": "10.1038/s41537-024-00524-7",
+    "url": "https://doi.org/10.1038/s41537-024-00524-7"
+  },
+  {
+    "title": "Navigating the semantic space: unraveling the structure of meaning in psychosis using different computational language models",
+    "authors": ["He, R.", "Palominos, C.", "Zhang, H.", "Alonso-Sánchez, M. F.", "Palaniyappan, L.", "Hinzen, W."],
+    "venue": "Psychiatry Research",
+    "volume": "333",
+    "issue": null,
+    "pages": "115752",
+    "year": 2024,
+    "doi": "10.1016/j.psychres.2024.115752",
+    "url": "https://doi.org/10.1016/j.psychres.2024.115752"
+  },
+  {
+    "title": "Coreference Delays in Psychotic Discourse: Widening the Temporal Window",
+    "authors": ["Palominos, C.", "Figueroa-Barra, A.", "Hinzen, W."],
+    "venue": "Schizophrenia Bulletin (Supplement)",
+    "volume": "49",
+    "issue": "Suppl 2",
+    "pages": "S153–S162",
+    "year": 2023,
+    "doi": "10.1093/schbul/sbac102",
+    "url": "https://doi.org/10.1093/schbul/sbac102"
+  }
+]
