@@ -17,42 +17,125 @@
 
         <title>Expansible Text</title>
         <style>
+  :root{
+    --primary:#0d6efd;         /* keep Bootstrap-ish blue */
+    --primary-600:#0b5ed7;
+    --bg:#ffffff;
+    --bg-soft:#f6f8fb;
+    --card:#ffffff;
+    --text:#17212b;
+    --muted:#6b7785;
+    --border:#e6e9ef;
+    --shadow:0 6px 24px rgba(0,0,0,.08);
+    --radius:16px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0f1420;
+      --bg-soft:#121a2b;
+      --card:#111827;
+      --text:#e7ecf4;
+      --muted:#a8b3c7;
+      --border:#1f2937;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  body{
+    background:linear-gradient(180deg,var(--bg-soft),var(--bg));
+    color:var(--text);
+    font-family:"Muli", system-ui,-apple-system,Segoe UI,Roboto,Inter,"Helvetica Neue",Arial,sans-serif;
+    line-height:1.6;
+  }
+  .navbar{
+    backdrop-filter:saturate(140%) blur(6px);
+  }
+  .resume-section{
+    padding:72px 24px;
+  }
+  .resume-section-content{
+    max-width:980px;
+    margin:0 auto;
+  }
+  h1,h2,h3{ letter-spacing:.2px; }
+  h1{ font-weight:800; font-size:48px; }
+  h2{ font-weight:800; font-size:28px; margin-bottom:18px; }
+  .text-primary{ color:var(--primary)!important; }
+  .subheading a{ color:var(--primary-600); text-decoration:none; border-bottom:1px dashed transparent; }
+  .subheading a:hover{ border-bottom-color:var(--primary-600); }
 
-            * {
-              margin: 0;
-              padding: 0;
-            }
+  /* Cards */
+  .card-lite{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+  }
 
-            
-            .expansible-content {
-                display: none;
-            }
-            
-            .expansible-content.active {
-                display: inline;
-            }
+  /* Publications */
+  #pub-toolbar{
+    display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:16px;
+  }
+  .chip{
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--muted);
+    padding:6px 10px; border-radius:999px; cursor:pointer;
+    transition:all .15s ease-in-out;
+  }
+  .chip[data-active="true"]{ border-color:var(--primary); color:var(--primary); }
+  #pub-search{
+    flex:1 1 280px; min-width:220px;
+    border:1px solid var(--border); background:var(--card); color:var(--text);
+    border-radius:10px; padding:10px 12px; outline:none;
+  }
+  #pub-list{
+    list-style:none; padding:0; margin:0;
+    display:grid; gap:12px;
+  }
+  .pub{
+    display:grid; gap:6px; padding:14px 16px;
+    border:1px solid var(--border); border-radius:12px; background:var(--card);
+  }
+  .pub strong{ font-weight:800; }
+  .pub .meta{ color:var(--muted); font-size:.95rem; }
+  .pub .badges{ display:flex; gap:8px; flex-wrap:wrap; }
+  .badge{
+    font-size:.8rem; padding:3px 8px; border-radius:999px; border:1px solid var(--border); color:var(--muted);
+    background:var(--bg-soft);
+  }
+  .badge-primary{ border-color:rgba(13,110,253,.2); color:var(--primary); background:rgba(13,110,253,.06); }
+  .skeleton{
+    height:78px; border-radius:12px; background:linear-gradient(90deg,rgba(0,0,0,.06),rgba(0,0,0,.02),rgba(0,0,0,.06));
+    animation:pulse 1.2s infinite ease-in-out;
+    border:1px solid var(--border);
+  }
+  @keyframes pulse{
+    0%{ background-position:-200px 0; }
+    100%{ background-position:calc(200px + 100%) 0;}
+  }
 
-            .expandable-text {
-                cursor: pointer;
-                text-decoration: underline;
-            }
-            
-            .twitter-section {
-                padding: 50px 15px;
-                background-color: #f8f9fa;
-            }
+  /* Social icons */
+  .social-icons a{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:40px; height:40px; border-radius:12px; margin-right:8px;
+    background:var(--card); border:1px solid var(--border); color:var(--text);
+    transition:transform .12s ease, background .2s ease;
+  }
+  .social-icons a:hover{ transform:translateY(-2px); background:var(--bg-soft); color:var(--primary); }
 
-            .twitter-section h2 {
-                margin-bottom: 30px;
-                text-align: left;
-            }
+  /* Tiny fixes */
+  .twitter-section{ padding: 40px 0; }
+  .lead{ color:var(--text); }
+  .muted{ color:var(--muted); }
 
-            .twitter-section div {
-                margin: 0 auto;
-                max-width: 600px;
-            }
+  /* Dark-mode toggle */
+  .mode-toggle{
+    position:fixed; right:16px; bottom:16px; z-index:1000;
+    border:none; border-radius:999px; padding:10px 14px; background:var(--card); color:var(--text);
+    border:1px solid var(--border); box-shadow:var(--shadow); cursor:pointer;
+  }
+</style>
 
-        </style>
         
     </head>
     <body id="page-top">
@@ -117,23 +200,27 @@
 <!-- Publications -->
 <section class="resume-section" id="publications">
   <div class="resume-section-content">
-    <h2 class="mb-3">Publications</h2>
-
-    <!-- Optional quick filters -->
-    <div class="mb-3" id="pub-filters" style="display:flex;gap:10px;align-items:center;">
-      <button class="btn btn-sm btn-outline-primary" data-year="all">All (2023+)</button>
-      <button class="btn btn-sm btn-outline-secondary" data-year="2025">2025</button>
-      <button class="btn btn-sm btn-outline-secondary" data-year="2024">2024</button>
-      <button class="btn btn-sm btn-outline-secondary" data-year="2023">2023</button>
+    <h2>Publications</h2>
+    <div id="pub-toolbar" class="card-lite" style="padding:10px;">
+      <input id="pub-search" type="search" placeholder="Search by title, author, venue…" aria-label="Search publications">
+      <div id="pub-chips" role="tablist" aria-label="Filter by year">
+        <button class="chip" data-year="all" data-active="true">All (2023+)</button>
+        <button class="chip" data-year="2025">2025</button>
+        <button class="chip" data-year="2024">2024</button>
+        <button class="chip" data-year="2023">2023</button>
+      </div>
     </div>
 
-    <ul class="list-group" id="pub-list" aria-live="polite"></ul>
+    <ul id="pub-list" aria-live="polite">
+      <li class="skeleton"></li>
+      <li class="skeleton"></li>
+      <li class="skeleton"></li>
+    </ul>
 
-    <div id="pub-error" class="text-danger mt-3" style="display:none;">
-      Couldn’t load publications.
-    </div>
+    <div id="pub-error" class="text-danger mt-3" style="display:none;">Couldn’t load publications.</div>
   </div>
 </section>
+
 
             <hr class="m-0" />
             <!-- Education-->
@@ -202,104 +289,104 @@
 
 
 <script>
-/**
- * EXPECTED JSON at: /data/publications.json
- * [
- *   {
- *     "title": "...",
- *     "authors": ["Last, F.", "Last, F.M.", "..."],
- *     "venue": "Journal / Conference",
- *     "volume": "10",
- *     "issue": "2",
- *     "pages": "114-127",
- *     "year": 2024,
- *     "doi": "10.1038/s41537-024-00524-7",
- *     "url": "https://doi.org/10.1038/s41537-024-00524-7"
- *   },
- *   ...
- * ]
- */
-
-(function() {
-  const LIST_EL = document.getElementById('pub-list');
-  const ERR_EL  = document.getElementById('pub-error');
-  const FILTERS = document.getElementById('pub-filters');
+(function(){
+  const LIST   = document.getElementById('pub-list');
+  const ERR    = document.getElementById('pub-error');
+  const SEARCH = document.getElementById('pub-search');
+  const CHIPS  = document.getElementById('pub-chips');
 
   const START_YEAR = 2023;
-  const DATA_URL   = 'data/publications.json'; // put the JSON here in your repo
+  const DATA_URL   = 'data/publications.json';
 
-  function scholarCitation(pub) {
-    // Build a citation that looks like Google Scholar's list style
-    // Example: A Author, B Author, ...  Title.  Venue volume(issue), pages, year.
-    const authors = (pub.authors || []).join(', ');
+  let DATA = [];
+  let STATE = { q:'', year:'all' };
 
-    // Venue chunk (handles missing bits gracefully)
-    let venueChunk = (pub.venue || '').trim();
-    if (pub.volume) venueChunk += ` ${pub.volume}`;
-    if (pub.issue)  venueChunk += `(${pub.issue})`;
-    if (pub.pages)  venueChunk += `, ${pub.pages}`;
-    if (pub.year)   venueChunk += `, ${pub.year}`;
+  function formatAuthors(list){
+    const s = (list || []).join(', ').trim().replace(/[.\s]+$/, '');
+    return `${s}.`;
+  }
 
-    // Link to DOI/URL if present
-    let linkHTML = '';
-    if (pub.url) {
-      const nice = pub.doi ? `DOI: ${pub.doi}` : 'Link';
-      linkHTML = ` <a href="${pub.url}" target="_blank" rel="noopener">${nice}</a>`;
-    } else if (pub.doi) {
-      linkHTML = ` <a href="https://doi.org/${pub.doi}" target="_blank" rel="noopener">DOI: ${pub.doi}</a>`;
-    }
+  function cite(pub){
+    const authors = formatAuthors(pub.authors||[]);
+    let venue = (pub.venue||'').trim();
+    if (pub.volume) venue += ` ${pub.volume}`;
+    if (pub.issue)  venue += `(${pub.issue})`;
+    if (pub.pages)  venue += `, ${pub.pages}`;
+    if (pub.year)   venue += `, ${pub.year}`;
+
+    const doi = pub.doi ? `<span class="badge badge-primary">DOI</span>` : '';
+    const link = pub.url ? `<a href="${pub.url}" target="_blank" rel="noopener">${pub.doi ? 'Open' : 'Link'}</a>` :
+                 pub.doi ? `<a href="https://doi.org/${pub.doi}" target="_blank" rel="noopener">Open</a>` : '';
 
     return `
-      <li class="list-group-item">
-        <div style="font-size:0.95rem; line-height:1.4;">
-          <span>${authors}</span>
-          <br>
-          <strong>${pub.title || ''}</strong>
-          <br>
-          <em>${venueChunk}</em>${linkHTML}
+      <li class="pub">
+        <div class="meta">${authors}</div>
+        <div><strong>${pub.title || ''}</strong></div>
+        <div class="meta"><em>${venue}</em></div>
+        <div class="badges">
+          ${doi}
+          ${link}
         </div>
       </li>
     `;
   }
 
-  function render(list, yearFilter = 'all') {
-    LIST_EL.innerHTML = '';
-    const filtered = list
-      .filter(p => (p.year && p.year >= START_YEAR))
-      .filter(p => (yearFilter === 'all' ? true : p.year === Number(yearFilter)))
-      .sort((a,b) => (b.year - a.year) || (a.title||'').localeCompare(b.title||''));
-
-    if (!filtered.length) {
-      LIST_EL.innerHTML = '<li class="list-group-item text-muted">No items match this filter.</li>';
-      return;
-    }
-
-    LIST_EL.innerHTML = filtered.map(scholarCitation).join('');
+  function matchesQuery(p, q){
+    if (!q) return true;
+    const hay = [
+      p.title||'',
+      (p.authors||[]).join(' '),
+      p.venue||'',
+      p.doi||''
+    ].join(' ').toLowerCase();
+    return hay.includes(q.toLowerCase());
   }
 
-  fetch(DATA_URL, {cache: 'no-store'})
-    .then(r => r.json())
-    .then(data => { render(data, 'all'); })
-    .catch(err => { console.error(err); ERR_EL.style.display = 'block'; });
+  function render(){
+    const { q, year } = STATE;
+    const filtered = DATA
+      .filter(p => p.year && p.year >= START_YEAR)
+      .filter(p => year==='all' ? true : Number(p.year)===Number(year))
+      .filter(p => matchesQuery(p, q))
+      .sort((a,b)=>(b.year - a.year) || (a.title||'').localeCompare(b.title||''));
 
-  // Filters
-  FILTERS.addEventListener('click', (e) => {
-    if (!(e.target instanceof HTMLElement)) return;
-    const yr = e.target.getAttribute('data-year');
-    if (!yr) return;
-    // toggle button styles
-    Array.from(FILTERS.querySelectorAll('button')).forEach(b => {
-      b.classList.remove('btn-primary');
-      b.classList.add('btn-outline-secondary');
+    if (!filtered.length){
+      LIST.innerHTML = `<li class="pub"><div class="meta">No items match your filters.</div></li>`;
+      return;
+    }
+    LIST.innerHTML = filtered.map(cite).join('');
+  }
+
+  function setChipActive(year){
+    [...CHIPS.querySelectorAll('.chip')].forEach(c=>{
+      c.dataset.active = (c.getAttribute('data-year')===year) || (year==='all' && c.getAttribute('data-year')==='all');
     });
-    e.target.classList.remove('btn-outline-secondary');
-    e.target.classList.add('btn-primary');
+  }
 
-    // Re-fetch then filter (keeps it simple and stateless)
-    fetch(DATA_URL, {cache: 'no-store'})
-      .then(r => r.json())
-      .then(data => render(data, yr))
-      .catch(err => { console.error(err); ERR_EL.style.display = 'block'; });
+  fetch(DATA_URL,{cache:'no-store'})
+    .then(r=>r.json())
+    .then(json=>{
+      DATA = json || [];
+      render();
+    })
+    .catch(err=>{
+      console.error(err);
+      ERR.style.display='block';
+      LIST.innerHTML='';
+    });
+
+  SEARCH.addEventListener('input', e=>{
+    STATE.q = e.target.value || '';
+    render();
+  });
+
+  CHIPS.addEventListener('click', e=>{
+    const btn = e.target.closest('.chip');
+    if (!btn) return;
+    STATE.year = btn.getAttribute('data-year') || 'all';
+    setChipActive(STATE.year);
+    render();
   });
 })();
 </script>
+
