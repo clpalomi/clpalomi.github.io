@@ -1,409 +1,429 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Claudio Palominos - personal website</title>
-        <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
-        <!-- Font Awesome icons (free version)-->
-        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-        <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet" type="text/css" />
-        <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet" type="text/css" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Claudio Palominos — personal website</title>
+  <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+  <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:600,700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,700,800&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-        <title>Expansible Text</title>
-        <style>
-  :root{
-    --primary:#0d6efd;         /* keep Bootstrap-ish blue */
-    --primary-600:#0b5ed7;
-    --bg:#ffffff;
-    --bg-soft:#f6f8fb;
-    --card:#ffffff;
-    --text:#17212b;
-    --muted:#6b7785;
-    --border:#e6e9ef;
-    --shadow:0 6px 24px rgba(0,0,0,.08);
-    --radius:16px;
-  }
-  @media (prefers-color-scheme: dark){
+  <!-- Design System -->
+  <style>
     :root{
-      --bg:#0f1420;
-      --bg-soft:#121a2b;
-      --card:#111827;
-      --text:#e7ecf4;
+      /* Unified palette */
+      --primary:#0d6efd;
+      --primary-600:#0b5ed7;
+      --bg:#0f1420;            /* dark default for sleek minimal look; toggle below can flip */
+      --surface:#111827;
       --muted:#a8b3c7;
+      --text:#e9eef7;
       --border:#1f2937;
-      --shadow:0 10px 30px rgba(0,0,0,.35);
+      --shadow:0 10px 28px rgba(0,0,0,.35);
+      --radius:16px;
+      --radius-sm:12px;
+      --sidebar-w:300px;
+      --step-1: clamp(24px, 5vw, 44px); /* h1 fluid */
     }
-  }
-  body{
-    background:linear-gradient(180deg,var(--bg-soft),var(--bg));
-    color:var(--text);
-    font-family:"Muli", system-ui,-apple-system,Segoe UI,Roboto,Inter,"Helvetica Neue",Arial,sans-serif;
-    line-height:1.6;
-  }
-  .navbar{
-    backdrop-filter:saturate(140%) blur(6px);
-  }
-  .resume-section{
-    padding:72px 24px;
-  }
-  .resume-section-content{
-    max-width:980px;
-    margin:0 auto;
-  }
-  h1,h2,h3{ letter-spacing:.2px; }
-  h1{ font-weight:800; font-size:48px; }
-  h2{ font-weight:800; font-size:28px; margin-bottom:18px; }
-  .text-primary{ color:var(--primary)!important; }
-  .subheading a{ color:var(--primary-600); text-decoration:none; border-bottom:1px dashed transparent; }
-  .subheading a:hover{ border-bottom-color:var(--primary-600); }
+    @media (prefers-color-scheme: light){
+      :root{
+        --bg:#f4f7fb;
+        --surface:#ffffff;
+        --muted:#677385;
+        --text:#141a22;
+        --border:#e6e9ef;
+        --shadow:0 8px 26px rgba(0,0,0,.08);
+      }
+    }
+    /* Allow manual override via data-theme */
+    html[data-theme="light"]{
+      --bg:#f4f7fb;
+      --surface:#ffffff;
+      --muted:#677385;
+      --text:#141a22;
+      --border:#e6e9ef;
+      --shadow:0 8px 26px rgba(0,0,0,.08);
+    }
+    html[data-theme="dark"]{
+      --bg:#0f1420;
+      --surface:#111827;
+      --muted:#a8b3c7;
+      --text:#e9eef7;
+      --border:#1f2937;
+      --shadow:0 10px 28px rgba(0,0,0,.35);
+    }
 
-  /* Cards */
-  .card-lite{
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    box-shadow:var(--shadow);
-  }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      background:linear-gradient(180deg, var(--bg), #0c111b 40%, var(--bg));
+      color:var(--text);
+      font-family:"Muli", system-ui, -apple-system, Segoe UI, Inter, Roboto, Helvetica, Arial, sans-serif;
+      line-height:1.6;
+      scroll-behavior:smooth;
+    }
 
-  /* Publications */
-  #pub-toolbar{
-    display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:16px;
-  }
-  .chip{
-    border:1px solid var(--border);
-    background:var(--card);
-    color:var(--muted);
-    padding:6px 10px; border-radius:999px; cursor:pointer;
-    transition:all .15s ease-in-out;
-  }
-  .chip[data-active="true"]{ border-color:var(--primary); color:var(--primary); }
-  #pub-search{
-    flex:1 1 280px; min-width:220px;
-    border:1px solid var(--border); background:var(--card); color:var(--text);
-    border-radius:10px; padding:10px 12px; outline:none;
-  }
-  #pub-list{
-    list-style:none; padding:0; margin:0;
-    display:grid; gap:12px;
-  }
-  .pub{
-    display:grid; gap:6px; padding:14px 16px;
-    border:1px solid var(--border); border-radius:12px; background:var(--card);
-  }
-  .pub strong{ font-weight:800; }
-  .pub .meta{ color:var(--muted); font-size:.95rem; }
-  .pub .badges{ display:flex; gap:8px; flex-wrap:wrap; }
-  .badge{
-    font-size:.8rem; padding:3px 8px; border-radius:999px; border:1px solid var(--border); color:var(--muted);
-    background:var(--bg-soft);
-  }
-  .badge-primary{ border-color:rgba(13,110,253,.2); color:var(--primary); background:rgba(13,110,253,.06); }
-  .skeleton{
-    height:78px; border-radius:12px; background:linear-gradient(90deg,rgba(0,0,0,.06),rgba(0,0,0,.02),rgba(0,0,0,.06));
-    animation:pulse 1.2s infinite ease-in-out;
-    border:1px solid var(--border);
-  }
-  @keyframes pulse{
-    0%{ background-position:-200px 0; }
-    100%{ background-position:calc(200px + 100%) 0;}
-  }
+    /* Layout */
+    .layout{
+      display:grid;
+      grid-template-columns: var(--sidebar-w) 1fr;
+      min-height:100vh;
+    }
+    @media (max-width: 992px){
+      .layout{ grid-template-columns: 1fr; }
+    }
 
-  /* Social icons */
-  .social-icons a{
-    display:inline-flex; align-items:center; justify-content:center;
-    width:40px; height:40px; border-radius:12px; margin-right:8px;
-    background:var(--card); border:1px solid var(--border); color:var(--text);
-    transition:transform .12s ease, background .2s ease;
-  }
-  .social-icons a:hover{ transform:translateY(-2px); background:var(--bg-soft); color:var(--primary); }
+    /* Sidebar */
+    .sidebar{
+      position:sticky; top:0; height:100vh; overflow:auto;
+      background:
+        radial-gradient(1200px 400px at -10% -10%, rgba(13,110,253,.08), transparent 60%),
+        linear-gradient(180deg, rgba(13,110,253,.10), transparent 30%),
+        var(--surface);
+      border-right:1px solid var(--border);
+      padding:24px 20px;
+    }
+    @media (max-width: 992px){
+      .sidebar{ position:static; height:auto; }
+    }
+    .profile{
+      display:flex; flex-direction:column; align-items:center; text-align:center;
+      gap:14px; margin-bottom:22px;
+    }
+    .avatar{
+      width:120px; height:120px; border-radius:50%;
+      border:3px solid rgba(13,110,253,.25);
+      box-shadow:var(--shadow);
+      object-fit:cover;
+    }
+    .name{
+      font-family:"Saira Extra Condensed", sans-serif;
+      font-weight:700; font-size:var(--step-1); line-height:1.05; letter-spacing:.4px;
+    }
+    .name .accent{ color:var(--primary); }
+    .sidebar .subheading{
+      color:var(--muted); font-size:.95rem;
+    }
 
-  /* Tiny fixes */
-  .twitter-section{ padding: 40px 0; }
-  .lead{ color:var(--text); }
-  .muted{ color:var(--muted); }
+    .navlinks{
+      margin-top:18px; display:flex; flex-direction:column; gap:6px;
+    }
+    .navlinks a{
+      display:flex; align-items:center; gap:10px;
+      padding:10px 12px; border-radius:12px; color:var(--text); text-decoration:none;
+      border:1px solid transparent;
+    }
+    .navlinks a:hover{ background:rgba(13,110,253,.06); border-color:rgba(13,110,253,.18); color:var(--primary); }
+    .navlinks a[aria-current="true"]{
+      background:rgba(13,110,253,.10); border-color:rgba(13,110,253,.28); color:var(--primary);
+    }
 
-  /* Dark-mode toggle */
-  .mode-toggle{
-    position:fixed; right:16px; bottom:16px; z-index:1000;
-    border:none; border-radius:999px; padding:10px 14px; background:var(--card); color:var(--text);
-    border:1px solid var(--border); box-shadow:var(--shadow); cursor:pointer;
-  }
-</style>
+    .social-icons a{
+      display:inline-flex; align-items:center; justify-content:center;
+      width:40px; height:40px; border-radius:12px; margin-right:8px;
+      background:var(--surface); border:1px solid var(--border); color:var(--text);
+      transition:transform .12s ease, background .2s ease, color .2s ease;
+    }
+    .social-icons a:hover{ transform:translateY(-2px); background:rgba(13,110,253,.06); color:var(--primary); }
 
-        
-    </head>
-    <body id="page-top">
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
-            <a class="navbar-brand js-scroll-trigger" href="#page-top">
-                <span class="d-block d-lg-none">Claudio Palominos</span>
-                <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="assets/img/foto_perfil.jpg" alt="..." /></span>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#publications">Publications</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#education">Education</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#interests">Interests</a></li>
-                </ul>
-            </div>
-        </nav>
-        
-        <!-- Page Content-->
-        <div class="container-fluid p-0">
-            <!-- About-->
-            <section class="resume-section" id="about">
-                <div class="resume-section-content">
-                    <h1 class="mb-0">
-                        Claudio
-                        <span class="text-primary">Palominos</span>
-                    </h1>
-                    <div class="subheading mb-5">
-                        Roc Boronat, 138 · 08018 Barcelona ·
-                        <a href="mailto:name@email.com">claudio.palominos@upf.edu</a>
-                    </div>
+    /* Main content */
+    .content{
+      padding:28px 28px 60px;
+    }
+    .section{
+      max-width:980px; margin:0 auto 28px; background:var(--surface);
+      border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow);
+      padding:26px;
+    }
+    .section h2{ margin-bottom:10px; font-weight:800; }
+    .muted{ color:var(--muted); }
 
-                    <p class="lead expansible" style="text-align: justify;">My primary research focus lies in exploring the semantic and referential meaning within speech, particularly within narrative structures. I specialize in studying these aspects in clinical populations afflicted with schizophrenia and related psychotic disorders. My objective is to unravel the functioning of diverse linguistic mechanisms in these individuals, while also drawing comparisons with neurotypical counterparts. To accomplish this, I employ Natural Language Processing (NLP) tools and Machine Learning. I predominantly program in Python.</p>
-                    
-                    <p class="lead mb-5 expansible" style="text-align: justify;">
-                        <span class="expandable-text" id="expandableText">I was born in Valparaíso</span>
-                        <span class="expansible-content" id="expandableText">and I studied Industrial Engineering and Economics at the University of Chile, graduating in 2013. After that, I worked as a Research Analyst doing economic and data analysis for several years. In 2018, I moved to Barcelona to pursue a Master's degree in Theoretical and Applied Linguistics at the Universitat Pompeu Fabra. I did my PhD under the supervision of Professor <a href="https://www.icrea.cat/Web/ScientificStaff/wolfram-hinzen-565">Wolfram Hinzen</a>, where I worked on referential and semantic meaning to assess clinical symptoms in Schizophrenia Spectrum Disorders (SSD).</span>
-                    </p>
+    /* Expandable paragraph */
+    .expandable{
+      cursor:pointer; color:var(--primary-600); text-decoration:underline;
+    }
+    .expansible-content{ display:none; }
+    .expansible-content.active{ display:inline; }
 
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            const expandableText = document.getElementById('expandableText');
-                            const content = document.querySelector('.expansible-content');
+    /* Publications UI */
+    #pub-toolbar{
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin:10px 0 14px;
+      background:linear-gradient(180deg, rgba(13,110,253,.06), transparent);
+      padding:10px; border:1px dashed rgba(13,110,253,.2); border-radius:12px;
+    }
+    #pub-search{
+      flex:1 1 280px; min-width:220px; padding:10px 12px;
+      border:1px solid var(--border); background:var(--surface); color:var(--text); border-radius:10px; outline:none;
+    }
+    #pub-chips{ display:flex; gap:8px; flex-wrap:wrap; }
+    .chip{
+      border:1px solid var(--border); background:var(--surface); color:var(--muted);
+      padding:6px 10px; border-radius:999px; cursor:pointer; transition:all .15s ease-in-out;
+    }
+    .chip[data-active="true"]{ border-color:var(--primary); color:var(--primary); background:rgba(13,110,253,.06); }
 
-                            expandableText.addEventListener('click', function() {
-                                content.classList.toggle('active');
-                            });
-                        });
-                    </script>
-                    
-                    <div class="social-icons">
-                        <a class="social-icon" href="https://www.linkedin.com/in/claudio-palominos-266698139/"><i class="fab fa-linkedin-in"></i></a>
-                        <a class="social-icon" href="https://github.com/clpalomi"><i class="fab fa-github"></i></a>
-                        <a class="social-icon" href="https://twitter.com/PossiblyHuman_"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
-            </section>
-            <hr class="m-0" />
-            
-<!-- Publications -->
-<section class="resume-section" id="publications">
-  <div class="resume-section-content">
-    <h2>Publications</h2>
-    <div id="pub-toolbar" class="card-lite" style="padding:10px;">
-      <input id="pub-search" type="search" placeholder="Search by title, author, venue…" aria-label="Search publications">
-      <div id="pub-chips" role="tablist" aria-label="Filter by year">
-        <button class="chip" data-year="all" data-active="true">All (2023+)</button>
-        <button class="chip" data-year="2025">2025</button>
-        <button class="chip" data-year="2024">2024</button>
-        <button class="chip" data-year="2023">2023</button>
+    #pub-list{ list-style:none; padding:0; margin:0; display:grid; gap:12px; }
+    .pub{
+      display:grid; gap:6px; padding:14px 16px; border:1px solid var(--border);
+      border-radius:var(--radius-sm); background:var(--surface);
+    }
+    .pub strong{ font-weight:800; }
+    .pub .meta{ color:var(--muted); font-size:.95rem; }
+    .pub .badges{ display:flex; gap:8px; flex-wrap:wrap; }
+    .badge{
+      font-size:.8rem; padding:3px 8px; border-radius:999px; border:1px solid var(--border);
+      color:var(--muted); background:rgba(0,0,0,.04);
+    }
+    .badge-primary{
+      border-color:rgba(13,110,253,.25); color:var(--primary); background:rgba(13,110,253,.10);
+    }
+    .skeleton{
+      height:78px; border-radius:var(--radius-sm);
+      background:linear-gradient(90deg, rgba(255,255,255,.05), rgba(255,255,255,.12), rgba(255,255,255,.05));
+      animation:pulse 1.2s infinite ease-in-out; border:1px solid var(--border);
+    }
+    @keyframes pulse{ 0%{background-position:-200px 0;} 100%{background-position:calc(200px + 100%) 0;} }
+
+    /* Theme toggle */
+    .mode-toggle{
+      position:fixed; right:16px; bottom:16px; z-index:1000; border:none;
+      border-radius:999px; padding:10px 14px; background:var(--surface); color:var(--text);
+      border:1px solid var(--border); box-shadow:var(--shadow); cursor:pointer;
+    }
+
+    /* Focus */
+    :focus-visible{ outline:2px solid var(--primary); outline-offset:2px; border-radius:8px; }
+  </style>
+</head>
+<body>
+
+  <div class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="profile">
+        <img class="avatar" src="assets/img/foto_perfil.jpg" alt="Profile photo of Claudio Palominos">
+        <div class="name">Claudio <span class="accent">Palominos</span></div>
+        <div class="subheading">
+          Roc Boronat 138 · 08018 Barcelona<br>
+          <a href="mailto:claudio.palominos@upf.edu" class="text-decoration-none" style="color:var(--primary-600)">claudio.palominos@upf.edu</a>
+        </div>
+        <div class="social-icons">
+          <a href="https://www.linkedin.com/in/claudio-palominos-266698139/" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://github.com/clpalomi" aria-label="GitHub"><i class="fab fa-github"></i></a>
+          <a href="https://twitter.com/PossiblyHuman_" aria-label="Twitter / X"><i class="fab fa-twitter"></i></a>
+        </div>
       </div>
-    </div>
 
-    <ul id="pub-list" aria-live="polite">
-      <li class="skeleton"></li>
-      <li class="skeleton"></li>
-      <li class="skeleton"></li>
-    </ul>
+      <nav class="navlinks" aria-label="Section navigation">
+        <a href="#about"><i class="fa-regular fa-user"></i> About</a>
+        <a href="#publications"><i class="fa-regular fa-file-lines"></i> Publications</a>
+        <a href="#education"><i class="fa-regular fa-graduation-cap"></i> Education</a>
+        <a href="#interests"><i class="fa-regular fa-heart"></i> Interests</a>
+        <a href="#tweets"><i class="fa-brands fa-x-twitter"></i> Latest Tweets</a>
+      </nav>
+    </aside>
 
-    <div id="pub-error" class="text-danger mt-3" style="display:none;">Couldn’t load publications.</div>
+    <!-- Main -->
+    <main class="content">
+      <!-- About -->
+      <section id="about" class="section">
+        <h2>About</h2>
+        <p class="lead" style="text-align: justify;">
+          My primary research focus lies in exploring the semantic and referential meaning within speech, particularly within narrative structures. I specialize in studying these aspects in clinical populations afflicted with schizophrenia and related psychotic disorders. My objective is to unravel the functioning of diverse linguistic mechanisms in these individuals, while also drawing comparisons with neurotypical counterparts. To accomplish this, I employ Natural Language Processing (NLP) tools and Machine Learning. I predominantly program in Python.
+        </p>
+
+        <p class="lead" style="text-align: justify;">
+          <span class="expandable" id="expandableTrigger">I was born in Valparaíso</span>
+          <span class="expansible-content" id="expandableContent">
+            and I studied Industrial Engineering and Economics at the University of Chile, graduating in 2013. After that, I worked as a Research Analyst doing economic and data analysis for several years. In 2018, I moved to Barcelona to pursue a Master's degree in Theoretical and Applied Linguistics at the Universitat Pompeu Fabra. I did my PhD under the supervision of Professor
+            <a href="https://www.icrea.cat/Web/ScientificStaff/wolfram-hinzen-565" class="text-decoration-none" style="color:var(--primary-600)">Wolfram Hinzen</a>, where I worked on referential and semantic meaning to assess clinical symptoms in Schizophrenia Spectrum Disorders (SSD).
+          </span>
+        </p>
+      </section>
+
+      <!-- Publications -->
+      <section id="publications" class="section">
+        <h2>Publications</h2>
+        <div id="pub-toolbar">
+          <input id="pub-search" type="search" placeholder="Search by title, author, venue…" aria-label="Search publications">
+          <div id="pub-chips" role="tablist" aria-label="Filter by year">
+            <button class="chip" data-year="all" data-active="true">All (2023+)</button>
+            <button class="chip" data-year="2025">2025</button>
+            <button class="chip" data-year="2024">2024</button>
+            <button class="chip" data-year="2023">2023</button>
+          </div>
+        </div>
+
+        <ul id="pub-list" aria-live="polite">
+          <li class="skeleton"></li>
+          <li class="skeleton"></li>
+          <li class="skeleton"></li>
+        </ul>
+
+        <div id="pub-error" class="text-danger mt-3" style="display:none;">Couldn’t load publications.</div>
+      </section>
+
+      <!-- Education -->
+      <section id="education" class="section">
+        <h2>Education</h2>
+        <div class="mb-4">
+          <h5 class="mb-1">Universitat Pompeu Fabra</h5>
+          <div class="muted">PhD student — Translation and Language Sciences</div>
+          <div class="muted">October 2019 – Present</div>
+        </div>
+        <div class="mb-4">
+          <h5 class="mb-1">Universitat Pompeu Fabra</h5>
+          <div class="muted">Master in Theoretical and Applied Linguistics</div>
+          <div class="muted">Excellent master's thesis · October 2018 – June 2019</div>
+        </div>
+        <div>
+          <h5 class="mb-1">Universidad de Chile</h5>
+          <div class="muted">Master in Applied Economics</div>
+          <div class="muted">Graduated with highest distinction · March 2011 – December 2013</div>
+        </div>
+      </section>
+
+      <!-- Interests -->
+      <section id="interests" class="section">
+        <h2>Interests</h2>
+        <p>I'm passionate about learning new languages (currently studying Russian, Georgian and Japanese). In my free time,
+          I read, write <a href="poetry.html" class="text-decoration-none" style="color:var(--primary-600)">poetry</a> and take long walks or hike. I also love experimenting with new recipes in the kitchen.</p>
+      </section>
+
+      <!-- Tweets -->
+      <section id="tweets" class="section">
+        <h2>Latest Tweets</h2>
+        <blockquote class="twitter-tweet">
+          <p lang="en" dir="ltr">🧵<br>1/ Excited to share my latest #research<br><br>Our paper, "Approximating the semantic space: word embedding techniques in psychiatric speech analysis", is now published in @schizjournal by @SpringerNature. Read it here: https://t.co/8Gboa5SSa7</p>
+          — Claudio Palominos (@PossiblyHuman_) <a href="https://twitter.com/PossiblyHuman_/status/1863592182856204502?ref_src=twsrc%5Etfw">December 2, 2024</a>
+        </blockquote>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+      </section>
+    </main>
   </div>
-</section>
 
+  <!-- Theme toggle -->
+  <button class="mode-toggle" id="themeToggle" aria-label="Toggle theme">🌗 Theme</button>
 
-            <hr class="m-0" />
-            <!-- Education-->
-            <section class="resume-section" id="education">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Education</h2>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Universitat Pompeu Fabra</h3>
-                            <div class="subheading mb-3">PhD student - Translation and Language Sciences</div>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">October 2019 - Present</span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Universitat Pompeu Fabra</h3>
-                            <div class="subheading mb-3">Master in Theoretical and Applied Linguistics</div>
-                            <p>Excellent master's thesis</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">October 2018 - June 2019</span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Universidad de Chile</h3>
-                            <div class="subheading mb-3">Master in Applied Economics</div>
-                            <p>Graduated with highest distinction</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">March 2011 - December 2013</span></div>
-                    </div>
-                </div>
-            </section>
-            <hr class="m-0" />
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
-            
-            <hr class="m-0" />
-            <!-- Interests-->
-            <section class="resume-section" id="interests">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Interests</h2>
-                    <p>I'm passionate about learning new languages (currently studying Russian, Georgian and Japanese). In my free time, 
-                        I read, write <a href="poetry.html">poetry</a> and take long walks or hike. I also love 
-                        experimenting with new recipes in the kitchen.</p>
-                </div>
-            </section>
+  <script>
+    // Expandable paragraph
+    (function(){
+      const trigger = document.getElementById('expandableTrigger');
+      const content = document.getElementById('expandableContent');
+      trigger?.addEventListener('click', ()=> content.classList.toggle('active'));
+    })();
 
-            <!-- Twitter Section -->
-            <section class="resume-section twitter-section" id="tweets">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Latest Tweets</h2>
-                        <blockquote class="twitter-tweet"><p lang="en" dir="ltr">🧵<br>1/ Excited to share my latest <a href="https://twitter.com/hashtag/research?src=hash&amp;ref_src=twsrc%5Etfw">#research</a><br><br>Our paper, &quot;Approximating the semantic space: word embedding techniques in psychiatric speech analysis&quot;, is now published in <a href="https://twitter.com/schizjournal?ref_src=twsrc%5Etfw">@schizjournal</a> by <a href="https://twitter.com/SpringerNature?ref_src=twsrc%5Etfw">@SpringerNature</a>. Read it here: <a href="https://t.co/8Gboa5SSa7">https://t.co/8Gboa5SSa7</a></p>&mdash; Claudio Palominos (@PossiblyHuman_) <a href="https://twitter.com/PossiblyHuman_/status/1863592182856204502?ref_src=twsrc%5Etfw">December 2, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                    
-                        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                </div>
-            </section>
-            
-            <hr class="m-0" />
-        </div>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
-    </body>
-</html>
+    // Sidebar current link highlighting (IntersectionObserver)
+    (function(){
+      const links = document.querySelectorAll('.navlinks a');
+      const map = {};
+      links.forEach(a => { map[a.getAttribute('href')] = a; });
+      const observer = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+          const id = '#'+entry.target.id;
+          if(entry.isIntersecting){
+            links.forEach(l=>l.removeAttribute('aria-current'));
+            map[id]?.setAttribute('aria-current','true');
+          }
+        });
+      }, { rootMargin: '-40% 0px -50% 0px', threshold: 0.01 });
+      document.querySelectorAll('main .section').forEach(sec=>observer.observe(sec));
+    })();
 
+    // Theme toggle (persist)
+    (function(){
+      const key='theme';
+      const btn=document.getElementById('themeToggle');
+      const root=document.documentElement;
+      const apply=(t)=>{ root.setAttribute('data-theme', t); document.documentElement.style.colorScheme=(t==='dark'?'dark':'light'); }
+      const saved=localStorage.getItem(key);
+      if(saved) apply(saved);
+      btn.addEventListener('click', ()=>{
+        const cur=root.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+        const next=cur==='dark'?'light':'dark';
+        apply(next); localStorage.setItem(key,next);
+      });
+    })();
+  </script>
 
-
-
-<script>
-(function(){
-  const LIST   = document.getElementById('pub-list');
-  const ERR    = document.getElementById('pub-error');
-  const SEARCH = document.getElementById('pub-search');
-  const CHIPS  = document.getElementById('pub-chips');
-
-  const START_YEAR = 2023;
-  const DATA_URL   = 'data/publications.json';
-
-  let DATA = [];
-  let STATE = { q:'', year:'all' };
-
-  function formatAuthors(list){
-    const s = (list || []).join(', ').trim().replace(/[.\s]+$/, '');
-    return `${s}.`;
-  }
-
-  function cite(pub){
-    const authors = formatAuthors(pub.authors||[]);
-    let venue = (pub.venue||'').trim();
-    if (pub.volume) venue += ` ${pub.volume}`;
-    if (pub.issue)  venue += `(${pub.issue})`;
-    if (pub.pages)  venue += `, ${pub.pages}`;
-    if (pub.year)   venue += `, ${pub.year}`;
-
-    const doi = pub.doi ? `<span class="badge badge-primary">DOI</span>` : '';
-    const link = pub.url ? `<a href="${pub.url}" target="_blank" rel="noopener">${pub.doi ? 'Open' : 'Link'}</a>` :
-                 pub.doi ? `<a href="https://doi.org/${pub.doi}" target="_blank" rel="noopener">Open</a>` : '';
-
-    return `
-      <li class="pub">
-        <div class="meta">${authors}</div>
-        <div><strong>${pub.title || ''}</strong></div>
-        <div class="meta"><em>${venue}</em></div>
-        <div class="badges">
-          ${doi}
-          ${link}
-        </div>
-      </li>
-    `;
-  }
-
-  function matchesQuery(p, q){
-    if (!q) return true;
-    const hay = [
-      p.title||'',
-      (p.authors||[]).join(' '),
-      p.venue||'',
-      p.doi||''
-    ].join(' ').toLowerCase();
-    return hay.includes(q.toLowerCase());
-  }
-
-  function render(){
-    const { q, year } = STATE;
-    const filtered = DATA
-      .filter(p => p.year && p.year >= START_YEAR)
-      .filter(p => year==='all' ? true : Number(p.year)===Number(year))
-      .filter(p => matchesQuery(p, q))
-      .sort((a,b)=>(b.year - a.year) || (a.title||'').localeCompare(b.title||''));
-
-    if (!filtered.length){
-      LIST.innerHTML = `<li class="pub"><div class="meta">No items match your filters.</div></li>`;
-      return;
-    }
-    LIST.innerHTML = filtered.map(cite).join('');
-  }
-
-  function setChipActive(year){
-    [...CHIPS.querySelectorAll('.chip')].forEach(c=>{
-      c.dataset.active = (c.getAttribute('data-year')===year) || (year==='all' && c.getAttribute('data-year')==='all');
-    });
-  }
-
-  fetch(DATA_URL,{cache:'no-store'})
-    .then(r=>r.json())
-    .then(json=>{
-      DATA = json || [];
-      render();
-    })
-    .catch(err=>{
-      console.error(err);
-      ERR.style.display='block';
-      LIST.innerHTML='';
-    });
-
-  SEARCH.addEventListener('input', e=>{
-    STATE.q = e.target.value || '';
-    render();
-  });
-
-  CHIPS.addEventListener('click', e=>{
-    const btn = e.target.closest('.chip');
-    if (!btn) return;
-    STATE.year = btn.getAttribute('data-year') || 'all';
-    setChipActive(STATE.year);
-    render();
-  });
-})();
-</script>
-
-
-<button class="mode-toggle" id="themeToggle" aria-label="Toggle theme">🌗 Theme</button>
-<script>
+  <!-- Publications script -->
+  <script>
   (function(){
-    const key='theme';
-    const btn=document.getElementById('themeToggle');
-    const root=document.documentElement;
-    const apply=(t)=>{ root.dataset.theme=t; document.documentElement.style.colorScheme=(t==='dark'?'dark':'light'); }
-    const saved=localStorage.getItem(key);
-    if(saved) apply(saved);
-    btn.addEventListener('click', ()=>{
-      const cur=root.dataset.theme==='dark'?'dark':'light';
-      const next=cur==='dark'?'light':'dark';
-      apply(next); localStorage.setItem(key,next);
+    const LIST   = document.getElementById('pub-list');
+    const ERR    = document.getElementById('pub-error');
+    const SEARCH = document.getElementById('pub-search');
+    const CHIPS  = document.getElementById('pub-chips');
+
+    const START_YEAR = 2023;
+    const DATA_URL   = 'data/publications.json';  // keep your JSON here
+
+    let DATA = [];
+    let STATE = { q:'', year:'all' };
+
+    function formatAuthors(list){
+      const s = (list || []).join(', ').trim().replace(/[.\s]+$/, '');
+      return `${s}.`;
+    }
+    function cite(pub){
+      const authors = formatAuthors(pub.authors||[]);
+      let venue = (pub.venue||'').trim();
+      if (pub.volume) venue += ` ${pub.volume}`;
+      if (pub.issue)  venue += `(${pub.issue})`;
+      if (pub.pages)  venue += `, ${pub.pages}`;
+      if (pub.year)   venue += `, ${pub.year}`;
+
+      const doi  = pub.doi ? `<span class="badge badge-primary">DOI</span>` : '';
+      const link = pub.url ? `<a href="${pub.url}" target="_blank" rel="noopener">${pub.doi ? 'Open' : 'Link'}</a>`
+                 : pub.doi ? `<a href="https://doi.org/${pub.doi}" target="_blank" rel="noopener">Open</a>` : '';
+
+      return `
+        <li class="pub">
+          <div class="meta">${authors}</div>
+          <div><strong>${pub.title || ''}</strong></div>
+          <div class="meta"><em>${venue}</em></div>
+          <div class="badges">${doi} ${link}</div>
+        </li>
+      `;
+    }
+    function matchesQuery(p, q){
+      if (!q) return true;
+      const hay = [p.title||'', (p.authors||[]).join(' '), p.venue||'', p.doi||''].join(' ').toLowerCase();
+      return hay.includes(q.toLowerCase());
+    }
+    function render(){
+      const { q, year } = STATE;
+      const filtered = DATA
+        .filter(p => p.year && p.year >= START_YEAR)
+        .filter(p => year==='all' ? true : Number(p.year)===Number(year))
+        .filter(p => matchesQuery(p, q))
+        .sort((a,b)=>(b.year - a.year) || (a.title||'').localeCompare(b.title||''));
+      LIST.innerHTML = filtered.length
+        ? filtered.map(cite).join('')
+        : `<li class="pub"><div class="meta">No items match your filters.</div></li>`;
+    }
+    function setChipActive(year){
+      [...CHIPS.querySelectorAll('.chip')].forEach(c=>{
+        c.dataset.active = (c.getAttribute('data-year')===year) || (year==='all' && c.getAttribute('data-year')==='all');
+      });
+    }
+
+    fetch(DATA_URL,{cache:'no-store'})
+      .then(r=>r.json())
+      .then(json=>{ DATA = json || []; render(); })
+      .catch(err=>{ console.error(err); ERR.style.display='block'; LIST.innerHTML=''; });
+
+    SEARCH.addEventListener('input', e=>{ STATE.q = e.target.value || ''; render(); });
+    CHIPS.addEventListener('click', e=>{
+      const btn = e.target.closest('.chip'); if (!btn) return;
+      STATE.year = btn.getAttribute('data-year') || 'all';
+      setChipActive(STATE.year); render();
     });
   })();
-</script>
+  </script>
+</body>
+</html>
