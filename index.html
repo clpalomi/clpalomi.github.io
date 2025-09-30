@@ -390,3 +390,20 @@
 })();
 </script>
 
+
+<button class="mode-toggle" id="themeToggle" aria-label="Toggle theme">🌗 Theme</button>
+<script>
+  (function(){
+    const key='theme';
+    const btn=document.getElementById('themeToggle');
+    const root=document.documentElement;
+    const apply=(t)=>{ root.dataset.theme=t; document.documentElement.style.colorScheme=(t==='dark'?'dark':'light'); }
+    const saved=localStorage.getItem(key);
+    if(saved) apply(saved);
+    btn.addEventListener('click', ()=>{
+      const cur=root.dataset.theme==='dark'?'dark':'light';
+      const next=cur==='dark'?'light':'dark';
+      apply(next); localStorage.setItem(key,next);
+    });
+  })();
+</script>
