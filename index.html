@@ -1,248 +1,124 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Claudio Palominos - personal website</title>
-        <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
-        <!-- Font Awesome icons (free version)-->
-        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-        <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet" type="text/css" />
-        <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet" type="text/css" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
+<!-- Publications -->
+<section class="resume-section" id="publications">
+  <div class="resume-section-content">
+    <h2 class="mb-3">Publications</h2>
+    <p class="text-muted" style="margin-top:-10px">Auto-formatted to match Google Scholar style · showing items from 2023 onwards</p>
 
-        <title>Expansible Text</title>
-        <style>
+    <!-- Optional quick filters -->
+    <div class="mb-3" id="pub-filters" style="display:flex;gap:10px;align-items:center;">
+      <button class="btn btn-sm btn-outline-primary" data-year="all">All (2023+)</button>
+      <button class="btn btn-sm btn-outline-secondary" data-year="2025">2025</button>
+      <button class="btn btn-sm btn-outline-secondary" data-year="2024">2024</button>
+      <button class="btn btn-sm btn-outline-secondary" data-year="2023">2023</button>
+    </div>
 
-            * {
-              margin: 0;
-              padding: 0;
-            }
+    <ul class="list-group" id="pub-list" aria-live="polite"></ul>
 
-            
-            .expansible-content {
-                display: none;
-            }
-            
-            .expansible-content.active {
-                display: inline;
-            }
+    <div id="pub-error" class="text-danger mt-3" style="display:none;">
+      Couldn’t load publications. If you’re viewing this locally via file:// please use a local server or deploy to the web.
+    </div>
+  </div>
+</section>
 
-            .expandable-text {
-                cursor: pointer;
-                text-decoration: underline;
-            }
-            
-            .twitter-section {
-                padding: 50px 15px;
-                background-color: #f8f9fa;
-            }
+<script>
+/**
+ * EXPECTED JSON at: /data/publications.json
+ * [
+ *   {
+ *     "title": "...",
+ *     "authors": ["Last, F.", "Last, F.M.", "..."],
+ *     "venue": "Journal / Conference",
+ *     "volume": "10",
+ *     "issue": "2",
+ *     "pages": "114-127",
+ *     "year": 2024,
+ *     "doi": "10.1038/s41537-024-00524-7",
+ *     "url": "https://doi.org/10.1038/s41537-024-00524-7"
+ *   },
+ *   ...
+ * ]
+ */
 
-            .twitter-section h2 {
-                margin-bottom: 30px;
-                text-align: left;
-            }
+(function() {
+  const LIST_EL = document.getElementById('pub-list');
+  const ERR_EL  = document.getElementById('pub-error');
+  const FILTERS = document.getElementById('pub-filters');
 
-            .twitter-section div {
-                margin: 0 auto;
-                max-width: 600px;
-            }
+  const START_YEAR = 2023;
+  const DATA_URL   = 'data/publications.json'; // put the JSON here in your repo
 
-        </style>
-        
-    </head>
-    <body id="page-top">
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
-            <a class="navbar-brand js-scroll-trigger" href="#page-top">
-                <span class="d-block d-lg-none">Claudio Palominos</span>
-                <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="assets/img/foto_perfil.jpg" alt="..." /></span>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#publications">Publications</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#education">Education</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#interests">Interests</a></li>
-                </ul>
-            </div>
-        </nav>
-        
-        <!-- Page Content-->
-        <div class="container-fluid p-0">
-            <!-- About-->
-            <section class="resume-section" id="about">
-                <div class="resume-section-content">
-                    <h1 class="mb-0">
-                        Claudio
-                        <span class="text-primary">Palominos</span>
-                    </h1>
-                    <div class="subheading mb-5">
-                        Roc Boronat, 138 · 08018 Barcelona ·
-                        <a href="mailto:name@email.com">claudio.palominos@upf.edu</a>
-                    </div>
+  function scholarCitation(pub) {
+    // Build a citation that looks like Google Scholar's list style
+    // Example: A Author, B Author, ...  Title.  Venue volume(issue), pages, year.
+    const authors = (pub.authors || []).join(', ');
 
-                    <p class="lead expansible" style="text-align: justify;">My primary research focus lies in exploring the semantic and referential meaning within speech, particularly within narrative structures. I specialize in studying these aspects in clinical populations afflicted with schizophrenia and related psychotic disorders. My objective is to unravel the functioning of diverse linguistic mechanisms in these individuals, while also drawing comparisons with neurotypical counterparts. To accomplish this, I employ Natural Language Processing (NLP) tools and Machine Learning. I predominantly program in Python.</p>
-                    
-                    <p class="lead mb-5 expansible" style="text-align: justify;">
-                        <span class="expandable-text" id="expandableText">I was born in Valparaíso</span>
-                        <span class="expansible-content" id="expandableText">and I studied Industrial Engineering and Economics at the University of Chile, graduating in 2013. After that, I worked as a Research Analyst doing economic and data analysis for several years. In 2018, I moved to Barcelona to pursue a Master's degree in Theoretical and Applied Linguistics at the Universitat Pompeu Fabra. I did my PhD under the supervision of Professor <a href="https://www.icrea.cat/Web/ScientificStaff/wolfram-hinzen-565">Wolfram Hinzen</a>, where I worked on referential and semantic meaning to assess clinical symptoms in Schizophrenia Spectrum Disorders (SSD).</span>
-                    </p>
+    // Venue chunk (handles missing bits gracefully)
+    let venueChunk = (pub.venue || '').trim();
+    if (pub.volume) venueChunk += ` ${pub.volume}`;
+    if (pub.issue)  venueChunk += `(${pub.issue})`;
+    if (pub.pages)  venueChunk += `, ${pub.pages}`;
+    if (pub.year)   venueChunk += `, ${pub.year}`;
 
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            const expandableText = document.getElementById('expandableText');
-                            const content = document.querySelector('.expansible-content');
+    // Link to DOI/URL if present
+    let linkHTML = '';
+    if (pub.url) {
+      const nice = pub.doi ? `DOI: ${pub.doi}` : 'Link';
+      linkHTML = ` <a href="${pub.url}" target="_blank" rel="noopener">${nice}</a>`;
+    } else if (pub.doi) {
+      linkHTML = ` <a href="https://doi.org/${pub.doi}" target="_blank" rel="noopener">DOI: ${pub.doi}</a>`;
+    }
 
-                            expandableText.addEventListener('click', function() {
-                                content.classList.toggle('active');
-                            });
-                        });
-                    </script>
-                    
-                    <div class="social-icons">
-                        <a class="social-icon" href="https://www.linkedin.com/in/claudio-palominos-266698139/"><i class="fab fa-linkedin-in"></i></a>
-                        <a class="social-icon" href="https://github.com/clpalomi"><i class="fab fa-github"></i></a>
-                        <a class="social-icon" href="https://twitter.com/PossiblyHuman_"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
-            </section>
-            <hr class="m-0" />
-            <!-- Publications -->
-            <section class="resume-section" id="publications">
-            <div class="resume-section-content">
-            <h2 class="mb-5">Publications</h2>
-            <!-- Publications -->
-            
-                <ul class="list-group">
-                    <li class="list-group-item">
-                    <strong>A single composite index of semantic behavior tracks symptoms of psychosis over time</strong><br>
-                    Claudio Palominos, Maryia Kirdun, Amir H. Nikzad, Michael J. Spilka, Philipp Homan, Iris E. Sommer, Sunny X. Tang, Wolfram Hinzen<br>
-                    <em>Schizophrenia Research</em>, 279, May 2025, Page 116-127<br>
-                    <a href="https://doi.org/10.1016/j.schres.2025.03.038" target="_blank">DOI: 10.1016/j.schres.2025.03.038</a>
-                    </li>
-                </ul>
-                <br>
-                
-                <ul class="list-group">
-                    <li class="list-group-item">
-                    <strong>The structure of meaning in schizophrenia: A study of spontaneous speech in Chinese</strong><br>
-                    Han Zhang, Rui He, Claudio Palominos, Ning Hsu, Hintat Cheung, Wolfram Hinzen<br>
-                    <em>Psychiatry Research</em>, 344, 2025, 116347<br>
-                    <a href="https://doi.org/10.1016/j.psychres.2024.116347" target="_blank">DOI: 10.1016/j.psychres.2024.116347</a>
-                    </li>
-                </ul>
-                <br>
-
-                <ul class="list-group">
-                    <li class="list-group-item">
-                    <strong>Approximating the semantic space: word embedding techniques in psychiatric speech analysis</strong><br>
-                    Claudio Palominos, Rui He, Karla Fröhlich, Rieke Roxanne Mülfarth, Svenja Seuffert, Iris E. Sommer, Tilo Kircher, Frederike Stein, Wolfram Hinzen<br>
-                    <em>Schizophrenia</em>, 10, December 2024, 114<br>
-                    2 December 2024<br>
-                    <a href="https://doi.org/10.1038/s41537-024-00524-7" target="_blank">DOI: 10.1038/s41537-024-00524-7</a>
-                    </li>
-                </ul>
-                <br>
-                
-                <ul class="list-group">
-                    <li class="list-group-item">
-                    <strong>Navigating the semantic space: unraveling the structure of meaning in psychosis using different computational language models</strong><br>
-                    Rui He, Claudio Palominos, Han Zhang, Maria Francisca Alonso-Sánchez, Lena Palaniyappan, Wolfram Hinzen<br>
-                    <em>Psychiatry Research</em>, Volume 333, March 2024, Pages S153–S162<br>
-                    22 March 2023<br>
-                    <a href="https://doi.org/10.1016/j.psychres.2024.115752" target="_blank">DOI: 10.1016/j.psychres.2024.115752</a>
-                    </li>
-                </ul>
-                <br>
-
-                <ul class="list-group">
-                    <li class="list-group-item">
-                    <strong>Coreference Delays in Psychotic Discourse: Widening the Temporal Window</strong><br>
-                    Claudio Palominos, Alicia Figueroa-Barra, Wolfram Hinzen<br>
-                    <em>Schizophrenia Bulletin</em>, Volume 49, Issue Supplement_2, March 2023, Pages S153–S162<br>
-                    22 March 2023<br>
-                    <a href="https://doi.org/10.1093/schbul/sbac102" target="_blank">DOI: 10.1093/schbul/sbac102</a>
-                    </li>
-                </ul>
-                <br>
-
-                <ul class="list-group">
-                    <li class="list-group-item">
-                    <strong>Referential noun phrases distribute differently in Turkish speakers with schizophrenia</strong><br>
-                    D Çokal, C Palominos, B Yalınçetin, Ö Türe-Abacı, ELÇİN Bora, W Hinzen<br>
-                    <em>Schizophrenia Research</em><br>
-                    22 July 2022<br>
-                    <a href="https://doi.org/10.1016/j.schres.2022.06.024" target="_blank">DOI: 10.1016/j.schres.2022.06.024</a>
-                    </li>
-                </ul>
-              </div>
-              </section>
-
-            <hr class="m-0" />
-            <!-- Education-->
-            <section class="resume-section" id="education">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Education</h2>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Universitat Pompeu Fabra</h3>
-                            <div class="subheading mb-3">PhD student - Translation and Language Sciences</div>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">October 2019 - Present</span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Universitat Pompeu Fabra</h3>
-                            <div class="subheading mb-3">Master in Theoretical and Applied Linguistics</div>
-                            <p>Excellent master's thesis</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">October 2018 - June 2019</span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Universidad de Chile</h3>
-                            <div class="subheading mb-3">Master in Applied Economics</div>
-                            <p>Graduated with highest distinction</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">March 2011 - December 2013</span></div>
-                    </div>
-                </div>
-            </section>
-            <hr class="m-0" />
-
-            
-            <hr class="m-0" />
-            <!-- Interests-->
-            <section class="resume-section" id="interests">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Interests</h2>
-                    <p>I'm passionate about learning new languages (currently studying Russian, Georgian and Japanese). In my free time, 
-                        I read, write <a href="poetry.html">poetry</a> and take long walks or hike. I also love 
-                        experimenting with new recipes in the kitchen.</p>
-                </div>
-            </section>
-
-            <!-- Twitter Section -->
-            <section class="resume-section" id="education">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Latest Tweets</h2>
-                        <blockquote class="twitter-tweet"><p lang="en" dir="ltr">🧵<br>1/ Excited to share my latest <a href="https://twitter.com/hashtag/research?src=hash&amp;ref_src=twsrc%5Etfw">#research</a><br><br>Our paper, &quot;Approximating the semantic space: word embedding techniques in psychiatric speech analysis&quot;, is now published in <a href="https://twitter.com/schizjournal?ref_src=twsrc%5Etfw">@schizjournal</a> by <a href="https://twitter.com/SpringerNature?ref_src=twsrc%5Etfw">@SpringerNature</a>. Read it here: <a href="https://t.co/8Gboa5SSa7">https://t.co/8Gboa5SSa7</a></p>&mdash; Claudio Palominos (@PossiblyHuman_) <a href="https://twitter.com/PossiblyHuman_/status/1863592182856204502?ref_src=twsrc%5Etfw">December 2, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                    
-                        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                </div>
-            </section>
-            
-            <hr class="m-0" />
+    return `
+      <li class="list-group-item">
+        <div style="font-size:0.95rem; line-height:1.4;">
+          <span>${authors}.</span>
+          <br>
+          <strong>${pub.title || ''}</strong>
+          <br>
+          <em>${venueChunk}</em>${linkHTML}
         </div>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
-    </body>
-</html>
+      </li>
+    `;
+  }
+
+  function render(list, yearFilter = 'all') {
+    LIST_EL.innerHTML = '';
+    const filtered = list
+      .filter(p => (p.year && p.year >= START_YEAR))
+      .filter(p => (yearFilter === 'all' ? true : p.year === Number(yearFilter)))
+      .sort((a,b) => (b.year - a.year) || (a.title||'').localeCompare(b.title||''));
+
+    if (!filtered.length) {
+      LIST_EL.innerHTML = '<li class="list-group-item text-muted">No items match this filter.</li>';
+      return;
+    }
+
+    LIST_EL.innerHTML = filtered.map(scholarCitation).join('');
+  }
+
+  fetch(DATA_URL, {cache: 'no-store'})
+    .then(r => r.json())
+    .then(data => { render(data, 'all'); })
+    .catch(err => { console.error(err); ERR_EL.style.display = 'block'; });
+
+  // Filters
+  FILTERS.addEventListener('click', (e) => {
+    if (!(e.target instanceof HTMLElement)) return;
+    const yr = e.target.getAttribute('data-year');
+    if (!yr) return;
+    // toggle button styles
+    Array.from(FILTERS.querySelectorAll('button')).forEach(b => {
+      b.classList.remove('btn-primary');
+      b.classList.add('btn-outline-secondary');
+    });
+    e.target.classList.remove('btn-outline-secondary');
+    e.target.classList.add('btn-primary');
+
+    // Re-fetch then filter (keeps it simple and stateless)
+    fetch(DATA_URL, {cache: 'no-store'})
+      .then(r => r.json())
+      .then(data => render(data, yr))
+      .catch(err => { console.error(err); ERR_EL.style.display = 'block'; });
+  });
+})();
+</script>
