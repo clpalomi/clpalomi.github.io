@@ -213,6 +213,18 @@
 
     /* Focus */
     :focus-visible{ outline:2px solid var(--primary); outline-offset:2px; border-radius:8px; }
+
+  /* Tame only the About section's body text */
+#about .lead{
+  /* Mobile → Desktop: smoothly scales but stays modest */
+  font-size: clamp(1rem, 0.96rem + 0.35vw, 1.1rem);
+  line-height: 1.7;
+  letter-spacing: 0.1px;
+}
+
+}
+
+    
   </style>
 </head>
 <body>
@@ -288,8 +300,7 @@
         <h2>Education</h2>
         <div class="mb-4">
           <h5 class="mb-1">Universitat Pompeu Fabra</h5>
-          <div class="muted">PhD student — Translation and Language Sciences</div>
-          <div class="muted">October 2019 – Present</div>
+          <div class="muted">PhD Translation and Language Sciences · 2019 – 2024 </div>
         </div>
         <div class="mb-4">
           <h5 class="mb-1">Universitat Pompeu Fabra</h5>
