@@ -13,218 +13,223 @@
   <!-- Design System -->
   <style>
     :root{
-      /* Unified palette */
-      --primary:#0d6efd;
-      --primary-600:#0b5ed7;
-      --bg:#0f1420;            /* dark default for sleek minimal look; toggle below can flip */
-      --surface:#111827;
-      --muted:#a8b3c7;
-      --text:#e9eef7;
-      --border:#1f2937;
-      --shadow:0 10px 28px rgba(0,0,0,.35);
-      --radius:16px;
-      --radius-sm:12px;
-      --sidebar-w:300px;
-      --step-1: clamp(24px, 5vw, 44px); /* h1 fluid */
-    }
-    @media (prefers-color-scheme: light){
-      :root{
-        --bg:#f4f7fb;
-        --surface:#ffffff;
-        --muted:#677385;
-        --text:#141a22;
-        --border:#e6e9ef;
-        --shadow:0 8px 26px rgba(0,0,0,.08);
-      }
-    }
-    /* Allow manual override via data-theme */
-    html[data-theme="light"]{
-      --bg:#f4f7fb;
+      --primary:#1f5f8b;
+      --primary-600:#174a6e;
+      --bg:#ffffff;
+      --sidebar-bg:#f7f7f5;
       --surface:#ffffff;
-      --muted:#677385;
-      --text:#141a22;
-      --border:#e6e9ef;
-      --shadow:0 8px 26px rgba(0,0,0,.08);
-    }
-    html[data-theme="dark"]{
-      --bg:#0f1420;
-      --surface:#111827;
-      --muted:#a8b3c7;
-      --text:#e9eef7;
-      --border:#1f2937;
-      --shadow:0 10px 28px rgba(0,0,0,.35);
+      --muted:#666f78;
+      --text:#1f2328;
+      --border:#e6e2dc;
+      --sidebar-w:300px;
+      --content-w:900px;
+      --step-1: clamp(1.9rem, 4vw, 2.8rem);
     }
 
     *{ box-sizing:border-box; }
+    html{ color-scheme:light; }
     body{
       margin:0;
-      background:linear-gradient(180deg, var(--bg), #0c111b 40%, var(--bg));
+      background:var(--bg);
       color:var(--text);
       font-family:"Muli", system-ui, -apple-system, Segoe UI, Inter, Roboto, Helvetica, Arial, sans-serif;
-      line-height:1.6;
+      line-height:1.7;
       scroll-behavior:smooth;
     }
 
-    /* Layout */
-.layout{
-  /* Mobile-first: single column */
-  display:block;
-  min-height:100vh;
-}
+    a{ color:var(--primary-600); }
+    a:hover{ color:var(--primary); }
 
-/* Sidebar: fixed on desktop, normal on mobile */
-.sidebar{
-  background:
-    radial-gradient(1200px 400px at -10% -10%, rgba(13,110,253,.08), transparent 60%),
-    linear-gradient(180deg, rgba(13,110,253,.10), transparent 30%),
-    var(--surface);
-  border-right:1px solid var(--border);
-  padding:24px 20px;
-}
+    .layout{ display:block; min-height:100vh; }
+    .sidebar{
+      background:var(--sidebar-bg);
+      border-right:1px solid var(--border);
+      padding:28px 22px;
+    }
 
-/* Desktop breakpoint: fixed left panel */
-/* Reserve space for the fixed sidebar on desktop */
-@media (min-width: 992px){
-  /* Shift the whole layout to the right by the sidebar width */
-  .layout{
-    padding-left: var(--sidebar-w);   /* <-- makes room for the fixed sidebar */
-  }
-
-  /* Keep the sidebar fixed and non-scrollable (or set overflow:auto if you want its own scroll) */
-  .sidebar{
-    position: fixed;
-    top: 0; left: 0; bottom: 0;
-    width: var(--sidebar-w);
-    overflow: hidden; /* or auto */
-    z-index: 10;
-  }
-
-  /* Ensure content isn't also adding extra margin if you tried a margin before */
-  .content{
-    margin-left: 0 !important;  /* <-- neutralize any earlier margin-left */
-  }
-}
-
-
+    @media (min-width: 992px){
+      .layout{ padding-left:var(--sidebar-w); }
+      .sidebar{
+        position:fixed;
+        top:0;
+        left:0;
+        bottom:0;
+        width:var(--sidebar-w);
+        overflow:auto;
+      }
+    }
+    
     .profile{
-      display:flex; flex-direction:column; align-items:center; text-align:center;
-      gap:14px; margin-bottom:22px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      text-align:center;
+      gap:14px;
+      margin-bottom:24px;
     }
     .avatar{
-      width:120px; height:120px; border-radius:50%;
-      border:3px solid rgba(13,110,253,.25);
-      box-shadow:var(--shadow);
+      width:118px;
+      height:118px;
+      border-radius:50%;
+      border:1px solid var(--border);
       object-fit:cover;
     }
     .name{
       font-family:"Saira Extra Condensed", sans-serif;
-      font-weight:700; font-size:var(--step-1); line-height:1.05; letter-spacing:.4px;
+      font-weight:700;
+      font-size:var(--step-1);
+      line-height:1.05;
+      letter-spacing:.3px;
     }
     .name .accent{ color:var(--primary); }
-    .sidebar .subheading{
-      color:var(--muted); font-size:.95rem;
-    }
+    .sidebar .subheading{ color:var(--muted); font-size:.95rem; }
 
     .navlinks{
-      margin-top:18px; display:flex; flex-direction:column; gap:6px;
+      margin-top:18px;
+      display:flex;
+      flex-direction:column;
+      gap:2px;
     }
     .navlinks a{
-      display:flex; align-items:center; gap:10px;
-      padding:10px 12px; border-radius:12px; color:var(--text); text-decoration:none;
-      border:1px solid transparent;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 4px;
+      color:var(--text);
+      text-decoration:none;
+      border-left:2px solid transparent;
     }
-    .navlinks a:hover{ background:rgba(13,110,253,.06); border-color:rgba(13,110,253,.18); color:var(--primary); }
+    .navlinks a:hover,
     .navlinks a[aria-current="true"]{
-      background:rgba(13,110,253,.10); border-color:rgba(13,110,253,.28); color:var(--primary);
+      color:var(--primary);
+      border-left-color:var(--primary);
+      padding-left:10px;
     }
 
     .social-icons a{
-      display:inline-flex; align-items:center; justify-content:center;
-      width:40px; height:40px; border-radius:12px; margin-right:8px;
-      background:var(--surface); border:1px solid var(--border); color:var(--text);
-      transition:transform .12s ease, background .2s ease, color .2s ease;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:34px;
+      height:34px;
+      margin-right:6px;
+      color:var(--muted);
+      text-decoration:none;
     }
-    .social-icons a:hover{ transform:translateY(-2px); background:rgba(13,110,253,.06); color:var(--primary); }
+    .social-icons a:hover{ color:var(--primary); }
 
-    /* Main content */
     .content{
-      padding:28px 28px 60px;
+      max-width:var(--content-w);
+      padding:42px 28px 72px;
+      margin:0 auto;
     }
     .section{
-      max-width:980px; margin:0 auto 28px; background:var(--surface);
-      border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow);
-      padding:26px;
+      padding:0 0 34px;
+      margin:0 0 34px;
+      border-bottom:1px solid var(--border);
     }
-    .section h2{ margin-bottom:10px; font-weight:800; }
+    .section:last-child{ border-bottom:0; }
+    .section h2{
+      margin:0 0 14px;
+      font-weight:800;
+      letter-spacing:-.02em;
+    }
     .muted{ color:var(--muted); }
+    .lead{ font-size:1.02rem; line-height:1.75; }
 
-    /* Expandable paragraph */
     .expandable{
-      cursor:pointer; color:var(--primary-600); text-decoration:underline;
+      cursor:pointer;
+      color:var(--primary-600);
+      text-decoration:underline;
+      text-decoration-thickness:.08em;
+      text-underline-offset:.15em;
     }
     .expansible-content{ display:none; }
     .expansible-content.active{ display:inline; }
+    .origin-gallery{
+      display:none;
+      grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
+      gap:12px;
+      margin-top:16px;
+    }
+    .origin-gallery.active.has-images{ display:grid; }
+    .origin-gallery img{
+      width:100%;
+      aspect-ratio:4 / 3;
+      object-fit:cover;
+      border-radius:6px;
+      border:1px solid var(--border);
+    }
+    .origin-gallery figcaption{
+      color:var(--muted);
+      font-size:.9rem;
+      margin-top:6px;
+    }
 
-    /* Publications UI */
+
+    .publication-note{
+      color:var(--muted);
+      margin-bottom:0;
+    }
     #pub-toolbar{
-      display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin:10px 0 14px;
-      background:linear-gradient(180deg, rgba(13,110,253,.06), transparent);
-      padding:10px; border:1px dashed rgba(13,110,253,.2); border-radius:12px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+      margin:14px 0 18px;
     }
     #pub-search{
-      flex:1 1 280px; min-width:220px; padding:10px 12px;
-      border:1px solid var(--border); background:var(--surface); color:var(--text); border-radius:10px; outline:none;
+      flex:1 1 260px;
+      min-width:220px;
+      padding:8px 10px;
+      border:1px solid var(--border);
+      background:var(--surface);
+      color:var(--text);
+      border-radius:4px;
+      outline:none;
     }
     #pub-chips{ display:flex; gap:8px; flex-wrap:wrap; }
     .chip{
-      border:1px solid var(--border); background:var(--surface); color:var(--muted);
-      padding:6px 10px; border-radius:999px; cursor:pointer; transition:all .15s ease-in-out;
+      border:1px solid var(--border);
+      background:var(--surface);
+      color:var(--muted);
+      padding:5px 9px;
+      border-radius:999px;
+      cursor:pointer;
+      line-height:1.2;
     }
-    .chip[data-active="true"]{ border-color:var(--primary); color:var(--primary); background:rgba(13,110,253,.06); }
+    .chip[data-active="true"]{ border-color:var(--primary); color:var(--primary); }
 
-    #pub-list{ list-style:none; padding:0; margin:0; display:grid; gap:12px; }
+    #pub-list.bibliography{
+      padding-left:1.35rem;
+      margin:0;
+    }
     .pub{
-      display:grid; gap:6px; padding:14px 16px; border:1px solid var(--border);
-      border-radius:var(--radius-sm); background:var(--surface);
+      margin:0 0 1.1rem;
+      padding-left:.25rem;
     }
-    .pub strong{ font-weight:800; }
-    .pub .meta{ color:var(--muted); font-size:.95rem; }
-    .pub .badges{ display:flex; gap:8px; flex-wrap:wrap; }
-    .badge{
-      font-size:.8rem; padding:3px 8px; border-radius:999px; border:1px solid var(--border);
-      color:var(--muted); background:rgba(0,0,0,.04);
+    .pub-title{ font-weight:800; }
+    .pub-meta{ color:var(--muted); }
+    .pub-links{
+      display:inline-flex;
+      gap:.5rem;
+      flex-wrap:wrap;
+      margin-left:.25rem;
     }
-    .badge-primary{
-      border-color:rgba(13,110,253,.25); color:var(--primary); background:rgba(13,110,253,.10);
-    }
+    .pub-links a{ white-space:nowrap; }
+    .doi{ color:var(--muted); font-size:.95rem; }
     .skeleton{
-      height:78px; border-radius:var(--radius-sm);
-      background:linear-gradient(90deg, rgba(255,255,255,.05), rgba(255,255,255,.12), rgba(255,255,255,.05));
-      animation:pulse 1.2s infinite ease-in-out; border:1px solid var(--border);
+      list-style:none;
+      height:1.25rem;
+      max-width:85%;
+      margin-bottom:.85rem;
+      border-radius:4px;
+      background:linear-gradient(90deg, #f0f0ee, #fafafa, #f0f0ee);
+      animation:pulse 1.2s infinite ease-in-out;
     }
-    @keyframes pulse{ 0%{background-position:-200px 0;} 100%{background-position:calc(200px + 100%) 0;} }
+    @keyframes pulse{ 0%{opacity:.55;} 50%{opacity:1;} 100%{opacity:.55;} }
 
-    /* Theme toggle */
-    .mode-toggle{
-      position:fixed; right:16px; bottom:16px; z-index:1000; border:none;
-      border-radius:999px; padding:10px 14px; background:var(--surface); color:var(--text);
-      border:1px solid var(--border); box-shadow:var(--shadow); cursor:pointer;
-    }
-
-    /* Focus */
-    :focus-visible{ outline:2px solid var(--primary); outline-offset:2px; border-radius:8px; }
-
-  /* Tame only the About section's body text */
-#about .lead{
-  /* Mobile → Desktop: smoothly scales but stays modest */
-  font-size: clamp(1rem, 0.96rem + 0.35vw, 1.1rem);
-  line-height: 1.7;
-  letter-spacing: 0.1px;
-}
-
-}
-
-    
+    :focus-visible{ outline:2px solid var(--primary); outline-offset:2px; border-radius:4px; }
   </style>
 </head>
 <body>
@@ -260,73 +265,47 @@
       <!-- About -->
       <section id="about" class="section">
         <h2>About</h2>
-        <p class="lead" style="text-align: justify;">
+        <p class="lead">
           My primary research focus lies in exploring semantic and referential meaning in speech, particularly within narrative structures and their temporal organization. I specialize in studying these aspects in clinical populations affected by schizophrenia spectrum and related psychotic disorders, with the aim of understanding how different linguistic mechanisms operate in these conditions in comparison with neurotypical populations. My work combines Natural Language Processing (NLP), Machine Learning, computational linguistics, and statistical modeling, primarily using Python.
         </p>
-        <p class="lead" style="text-align: justify;">
+        <p class="lead">
         More broadly, I am interested in the relationship between language, cognition, and representation learning, especially how meaning emerges, is organized, and evolves dynamically across time. My research explores how semantic and referential structures can be modeled computationally through embeddings, graph-based approaches, and temporal analyses, as well as how these linguistic dynamics relate to broader questions about human information processing and artificial intelligence. I am particularly interested in the interface between linguistic structure, cognitive organization, and AI systems, including the possibility of using language as a window into underlying cognitive and neural dynamics.
         </p>
-        <p class="lead" style="text-align: justify;">
-          <span class="expandable" id="expandableTrigger">I was born in Valparaíso</span>
+        <p class="lead">
+          <span class="expandable" id="expandableTrigger" role="button" tabindex="0" aria-expanded="false" aria-controls="expandableContent originGallery">I was born in Valparaíso</span>
           <span class="expansible-content" id="expandableContent">
             and studied Industrial Engineering and Economics at the University of Chile, graduating in 2013. After that, I worked for several years as a Research Analyst doing economic and data analysis. In 2018, I moved to Barcelona to pursue a Master's degree in Theoretical and Applied Linguistics at the Universitat Pompeu Fabra. I completed my PhD under the supervision of Professor
-            <a href="https://www.icrea.cat/Web/ScientificStaff/wolfram-hinzen-565" class="text-decoration-none" style="color:var(--primary-600)">Wolfram Hinzen</a>, focusing on referential and semantic meaning as markers of clinical symptoms in Schizophrenia Spectrum Disorders (SSD). I am currently continuing this line of work as a postdoctoral researcher in computational psychiatry, investigating speech, cognition, and meaning using computational and interdisciplinary approaches.
+            <a href="https://www.icrea.cat/Web/ScientificStaff/wolfram-hinzen-565" class="text-decoration-none">Wolfram Hinzen</a>, focusing on referential and semantic meaning as markers of clinical symptoms in Schizophrenia Spectrum Disorders (SSD). I am currently continuing this line of work as a postdoctoral researcher in computational psychiatry, investigating speech, cognition, and meaning using computational and interdisciplinary approaches.
           </span>
         </p>
+        <div class="origin-gallery" id="originGallery" aria-label="Photos from Valparaíso">
+          <!-- Upload personal photos to assets/img/valparaiso-1.jpg and assets/img/valparaiso-2.jpg. The gallery stays hidden until those files exist. -->
+        </div>
       </section>
 
       <!-- Publications -->
       <section id="publications" class="section">
         <h2>Publications</h2>
+        <p class="publication-note">A compact bibliography list keeps the section readable and prevents each item from becoming a separate card; use the filters only when you want to narrow the list.</p>
         <div id="pub-toolbar">
+          <input id="pub-search" type="search" placeholder="Search publications" aria-label="Search publications">
           <div id="pub-chips" role="tablist" aria-label="Filter by year">
             <button class="chip" data-year="all" data-active="true">All (2023+)</button>
+            <button class="chip" data-year="2026">2026</button>
             <button class="chip" data-year="2025">2025</button>
             <button class="chip" data-year="2024">2024</button>
             <button class="chip" data-year="2023">2023</button>
           </div>
         </div>
 
-        <ul id="pub-list" aria-live="polite">
+        <ol id="pub-list" class="bibliography" aria-live="polite">
           <li class="skeleton"></li>
           <li class="skeleton"></li>
           <li class="skeleton"></li>
-        </ul>
+        </ol>
 
         <div id="pub-error" class="text-danger mt-3" style="display:none;">Couldn’t load publications.</div>
       </section>
-
-      <script>
-      fetch('data/publications.json')
-  .then(res => res.json())
-  .then(pubs => {
-    // SORT: newest first, with manual override
-    pubs.sort((a, b) =>
-      (b.published_at || `${b.year}-01-01`)
-        .localeCompare(a.published_at || `${a.year}-01-01`) ||
-      ((b.sort_rank ?? 0) - (a.sort_rank ?? 0))
-    );
-
-    const list = document.getElementById('pub-list');
-    list.innerHTML = '';
-
-    pubs.forEach(pub => {
-      const li = document.createElement('li');
-      li.dataset.year = pub.year;
-
-      li.innerHTML = `
-        <strong>${pub.title}</strong><br>
-        ${pub.authors.join(', ')}<br>
-        <em>${pub.venue}</em> (${pub.year})
-      `;
-
-      list.appendChild(li);
-    });
-  })
-  .catch(() => {
-    document.getElementById('pub-error').style.display = 'block';
-  });
-      </script>
 
       <!-- Education -->
       <section id="education" class="section">
@@ -366,18 +345,47 @@
     </main>
   </div>
 
-  <!-- Theme toggle -->
-  <button class="mode-toggle" id="themeToggle" aria-label="Toggle theme">🌗 Theme</button>
-
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-    // Expandable paragraph
+    // Expandable origin paragraph and optional photo gallery.
+    // Add photos as assets/img/valparaiso-1.jpg and assets/img/valparaiso-2.jpg.
     (function(){
       const trigger = document.getElementById('expandableTrigger');
       const content = document.getElementById('expandableContent');
-      trigger?.addEventListener('click', ()=> content.classList.toggle('active'));
+      const gallery = document.getElementById('originGallery');
+      const photos = [
+        { src: 'assets/img/valparaiso-1.jpg', alt: 'Valparaíso photo 1' },
+        { src: 'assets/img/valparaiso-2.jpg', alt: 'Valparaíso photo 2' }
+      ];
+
+      photos.forEach(photo => {
+        const figure = document.createElement('figure');
+        figure.className = 'm-0';
+        const image = document.createElement('img');
+        image.src = photo.src;
+        image.alt = photo.alt;
+        image.loading = 'lazy';
+        image.addEventListener('load', () => gallery.classList.add('has-images'));
+        image.addEventListener('error', () => figure.remove());
+        figure.appendChild(image);
+        gallery.appendChild(figure);
+      });
+
+      const toggle = () => {
+        const isOpen = content.classList.toggle('active');
+        gallery.classList.toggle('active', isOpen);
+        trigger.setAttribute('aria-expanded', String(isOpen));
+      };
+
+      trigger?.addEventListener('click', toggle);
+      trigger?.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggle();
+        }
+      });
     })();
 
     // Sidebar current link highlighting (IntersectionObserver)
@@ -397,20 +405,6 @@
       document.querySelectorAll('main .section').forEach(sec=>observer.observe(sec));
     })();
 
-    // Theme toggle (persist)
-    (function(){
-      const key='theme';
-      const btn=document.getElementById('themeToggle');
-      const root=document.documentElement;
-      const apply=(t)=>{ root.setAttribute('data-theme', t); document.documentElement.style.colorScheme=(t==='dark'?'dark':'light'); }
-      const saved=localStorage.getItem(key);
-      if(saved) apply(saved);
-      btn.addEventListener('click', ()=>{
-        const cur=root.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
-        const next=cur==='dark'?'light':'dark';
-        apply(next); localStorage.setItem(key,next);
-      });
-    })();
   </script>
 
   <!-- Publications script -->
@@ -422,33 +416,46 @@
     const CHIPS  = document.getElementById('pub-chips');
 
     const START_YEAR = 2023;
-    const DATA_URL   = 'data/publications.json';  // keep your JSON here
+    const DATA_URL   = 'data/publications.json';
 
     let DATA = [];
     let STATE = { q:'', year:'all' };
 
+    function escapeHTML(value){
+      return String(value ?? '').replace(/[&<>"']/g, char => ({
+        '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
+      }[char]));
+    }
     function formatAuthors(list){
       const s = (list || []).join(', ').trim().replace(/[.\s]+$/, '');
-      return `${s}.`;
+      return s ? `${escapeHTML(s)}.` : '';
+    }
+    function formatVenue(pub){
+      const parts = [];
+      if (pub.venue) parts.push(`<em>${escapeHTML(pub.venue)}</em>`);
+      const details = [];
+      if (pub.volume) details.push(escapeHTML(pub.volume));
+      if (pub.issue) details.push(`(${escapeHTML(pub.issue)})`);
+      if (pub.pages) details.push(escapeHTML(pub.pages));
+      if (details.length) parts.push(details.join(', '));
+      if (pub.year) parts.push(escapeHTML(pub.year));
+      return parts.join(', ');
+    }
+    function publicationUrl(pub){
+      if (pub.url) return pub.url;
+      if (pub.doi) return `https://doi.org/${pub.doi}`;
+      return '';
     }
     function cite(pub){
-      const authors = formatAuthors(pub.authors||[]);
-      let venue = (pub.venue||'').trim();
-      if (pub.volume) venue += ` ${pub.volume}`;
-      if (pub.issue)  venue += `(${pub.issue})`;
-      if (pub.pages)  venue += `, ${pub.pages}`;
-      if (pub.year)   venue += `, ${pub.year}`;
-
-      const doi  = pub.doi ? `<span class="badge badge-primary">DOI</span>` : '';
-      const link = pub.url ? `<a href="${pub.url}" target="_blank" rel="noopener">${pub.doi ? 'Open' : 'Link'}</a>`
-                 : pub.doi ? `<a href="https://doi.org/${pub.doi}" target="_blank" rel="noopener">Open</a>` : '';
-
+       const doi = pub.doi ? `<span class="doi">DOI: ${escapeHTML(pub.doi)}</span>` : '';
+      const url = publicationUrl(pub);
+      const links = url ? `<span class="pub-links"><a href="${escapeHTML(url)}" target="_blank" rel="noopener">Publication</a></span>` : '';
+      
       return `
         <li class="pub">
-          <div class="meta">${authors}</div>
-          <div><strong>${pub.title || ''}</strong></div>
-          <div class="meta"><em>${venue}</em></div>
-          <div class="badges">${doi} ${link}</div>
+          <span class="pub-title">${escapeHTML(pub.title || '')}</span>
+          <span class="pub-meta">${formatAuthors(pub.authors || [])} ${formatVenue(pub)}.</span>
+          ${doi} ${links}
         </li>
       `;
     }
@@ -457,16 +464,19 @@
       const hay = [p.title||'', (p.authors||[]).join(' '), p.venue||'', p.doi||''].join(' ').toLowerCase();
       return hay.includes(q.toLowerCase());
     }
+    function sortDate(pub){
+      return pub.published_at || `${pub.year || 0}-01-01`;
+    }
     function render(){
       const { q, year } = STATE;
       const filtered = DATA
         .filter(p => p.year && p.year >= START_YEAR)
         .filter(p => year==='all' ? true : Number(p.year)===Number(year))
         .filter(p => matchesQuery(p, q))
-        .sort((a,b)=>(b.year - a.year) || (a.title||'').localeCompare(b.title||''));
+        .sort((a,b)=> sortDate(b).localeCompare(sortDate(a)) || (a.title||'').localeCompare(b.title||''));
       LIST.innerHTML = filtered.length
         ? filtered.map(cite).join('')
-        : `<li class="pub"><div class="meta">No items match your filters.</div></li>`;
+        : `<li class="pub"><span class="pub-meta">No items match your filters.</span></li>`;
     }
     function setChipActive(year){
       [...CHIPS.querySelectorAll('.chip')].forEach(c=>{
