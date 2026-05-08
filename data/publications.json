@@ -1,83 +1,95 @@
 [
-  {
-  "title": "What is the retest reliability of computationally extractable speech and language markers?",
-  "authors": [
-    "Çokal, D.",
-    "Villalba, M.",
-    "Rui, H.",
-    "Palominos, C.",
-    "Böke, A.",
-    "Homan, P.",
-    "...",
-    "Hinzen, W."
-  ],
-  "venue": "Computer Speech & Language",
-  "pages": "101981",
-  "year": 2026
-},
+    {
+    "title": "What is the retest reliability of computationally extractable speech and language markers?",
+    "authors": [
+      "Çokal, D.",
+      "Villalba, M.",
+      "Rui, H.",
+      "Palominos, C.",
+      "Böke, A.",
+      "Homan, P.",
+      "...",
+      "Hinzen, W."
+    ],
+    "venue": "Computer Speech & Language",
+    "pages": "101981",
+    "year": 2026,
+    "volume": "100",
+    "doi": "10.1016/j.csl.2026.101981",
+    "url": "https://doi.org/10.1016/j.csl.2026.101981",
+    "published_at": "2026-03-12"
+  },
   {
   "title": "Predicting PANSS symptoms in schizophrenia spectrum disorders using speech only: an international, multi-centre, retrospective, computational study across multiple languages",
-  "authors": [
-    "He, R.",
-    "Kirdun, M.",
-    "Palominos, C.",
-    "Orejudo, L. N.",
-    "Barthelemy, S.",
-    "Bhola, S.",
-    "...",
-    "Hinzen, W."
-    ],
-  "venue": "medRxiv",
-  "year": 2026,
-  "pages": "2026-02",
-  "url": "https://www.medrxiv.org/",
-  "published_at": "2026-02"
-  },  
+    "authors": [
+      "He, R.",
+      "Kirdun, M.",
+      "Palominos, C.",
+      "Orejudo, L. N.",
+      "Barthelemy, S.",
+      "Bhola, S.",
+      "...",
+      "Hinzen, W."
+      ],
+    "venue": "medRxiv",
+    "year": 2026,
+    "pages": "2026-02",
+    "url": "https://doi.org/10.64898/2026.02.20.26345632",
+    "published_at": "2026-02-28",
+    "doi": "10.64898/2026.02.20.26345632"
+  },
   {
   "title": "Three dimensions of speech coherence in people with early psychosis and their family members",
-  "authors": [
-    "Çokal, D.",
-    "Aloraini, A.",
-    "Palominos, C.",
-    "Demirlek, C.",
-    "Verim, B.",
-    "Yalınçetin, B.",
-    "Bora, E.",
-    "Hinzen, W."
-  ],
-  "venue": "Schizophrenia",
-  "volume": "12",
-  "issue": "1",
-  "pages": "2",
-  "year": 2026,
-  "doi": "10.1038/s41537-025-00703-0",
-  "url": "https://doi.org/10.1038/s41537-025-00703-0",
-  "published_at": "2025-12-17"
-},  
-{
-  "title": "Lexical meaning is lower dimensional in psychosis",
-  "authors": [
-    "Palominos, C.",
-    "Stein, F.",
-    "Kircher, T.",
-    "Ayesa-Arriola, R.",
-    "Palaniyappan, L.",
-    "Homan, P.",
-    "Sommer, I. E.",
-    "Hinzen, W."
-  ],
-  "venue": "Scientific Reports",
-  "volume": "16",
-  "issue": null,
-  "pages": "Article number 859",
-  "year": 2025,
-  "doi": "10.1038/s41598-025-30443-1",
-  "url": "https://www.nature.com/articles/s41598-025-30443-1",
-  "published_at": "2025-12-05"
-},  
+    "authors": [
+      "Çokal, D.",
+      "Aloraini, A.",
+      "Palominos, C.",
+      "Demirlek, C.",
+      "Verim, B.",
+      "Yalınçetin, B.",
+      "Bora, E.",
+      "Hinzen, W."
+    ],
+    "venue": "Schizophrenia",
+    "volume": "12",
+    "issue": "1",
+    "pages": "2",
+    "year": 2026,
+    "doi": "10.1038/s41537-025-00703-0",
+    "url": "https://doi.org/10.1038/s41537-025-00703-0",
+    "published_at": "2025-12-17"
+  },
+  {
+    "title": "Lexical meaning is lower dimensional in psychosis",
+    "authors": [
+      "Palominos, C.",
+      "Stein, F.",
+      "Kircher, T.",
+      "Ayesa-Arriola, R.",
+      "Palaniyappan, L.",
+      "Homan, P.",
+      "Sommer, I. E.",
+      "Hinzen, W."
+    ],
+    "venue": "Scientific Reports",
+    "volume": "16",
+    "issue": null,
+    "pages": "Article number 859",
+    "year": 2025,
+    "doi": "10.1038/s41598-025-30443-1",
+    "url": "https://www.nature.com/articles/s41598-025-30443-1",
+    "published_at": "2025-12-05"
+  },
   {
     "title": "Referential noun phrases distribute differently in Turkish speakers with schizophrenia",
-    "authors": ["Çokal, D.", "Palominos, C.", "Yalınçetin, B.", "Türe-Abacı, Ö.", "Bora, E.", "Hinzen, W."],
+    "authors": [
+      "Çokal, D.",
+      "Palominos, C.",
+      "Yalınçetin, B.",
+      "Türe-Abacı, Ö.",
+      "Bora, E.",
+      "Hinzen, W."
+    ],
     "venue": "Schizophrenia Research",
     "volume": "259",
     "issue": null,
@@ -88,7 +100,16 @@
   },
   {
     "title": "A single composite index of semantic behavior tracks symptoms of psychosis over time",
-    "authors": ["Palominos, C.", "Kirdun, M.", "Nikzad, A. H.", "Spilka, M. J.", "Homan, P.", "Sommer, I. E.", "Tang, S. X.", "Hinzen, W."],
+    "authors": [
+      "Palominos, C.",
+      "Kirdun, M.",
+      "Nikzad, A. H.",
+      "Spilka, M. J.",
+      "Homan, P.",
+      "Sommer, I. E.",
+      "Tang, S. X.",
+      "Hinzen, W."
+    ],
     "venue": "Schizophrenia Research",
     "volume": "279",
     "issue": null,
@@ -100,7 +121,14 @@
   },
   {
     "title": "The structure of meaning in schizophrenia: A study of spontaneous speech in Chinese",
-    "authors": ["Zhang, H.", "He, R.", "Palominos, C.", "Hsu, N.", "Cheung, H.", "Hinzen, W."],
+    "authors": [
+      "Zhang, H.",
+      "He, R.",
+      "Palominos, C.",
+      "Hsu, N.",
+      "Cheung, H.",
+      "Hinzen, W."
+    ],
     "venue": "Psychiatry Research",
     "volume": "344",
     "issue": null,
@@ -111,7 +139,17 @@
   },
   {
     "title": "Approximating the semantic space: word embedding techniques in psychiatric speech analysis",
-    "authors": ["Palominos, C.", "He, R.", "Fröhlich, K.", "Mülfarth, R. R.", "Seuffert, S.", "Sommer, I. E.", "Kircher, T.", "Stein, F.", "Hinzen, W."],
+    "authors": [
+      "Palominos, C.",
+      "He, R.",
+      "Fröhlich, K.",
+      "Mülfarth, R. R.",
+      "Seuffert, S.",
+      "Sommer, I. E.",
+      "Kircher, T.",
+      "Stein, F.",
+      "Hinzen, W."
+    ],
     "venue": "Schizophrenia",
     "volume": "10",
     "issue": null,
@@ -122,7 +160,14 @@
   },
   {
     "title": "Navigating the semantic space: unraveling the structure of meaning in psychosis using different computational language models",
-    "authors": ["He, R.", "Palominos, C.", "Zhang, H.", "Alonso-Sánchez, M. F.", "Palaniyappan, L.", "Hinzen, W."],
+     "authors": [
+      "He, R.",
+      "Palominos, C.",
+      "Zhang, H.",
+      "Alonso-Sánchez, M. F.",
+      "Palaniyappan, L.",
+      "Hinzen, W."
+    ],
     "venue": "Psychiatry Research",
     "volume": "333",
     "issue": null,
@@ -133,7 +178,11 @@
   },
   {
     "title": "Coreference Delays in Psychotic Discourse: Widening the Temporal Window",
-    "authors": ["Palominos, C.", "Figueroa-Barra, A.", "Hinzen, W."],
+    "authors": [
+      "Palominos, C.",
+      "Figueroa-Barra, A.",
+      "Hinzen, W."
+    ],
     "venue": "Schizophrenia Bulletin (Supplement)",
     "volume": "49",
     "issue": "Suppl 2",
