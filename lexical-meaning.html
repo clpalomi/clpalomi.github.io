@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blog — Claudio Palominos</title>
+  <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:600,700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,700,800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root{
+      --primary:#1f5f8b;
+      --bg:#ffffff;
+      --sidebar-bg:#f7f7f5;
+      --muted:#666f78;
+      --text:#1f2328;
+      --border:#e6e2dc;
+      --sidebar-w:300px;
+      --content-w:820px;
+      --step-1: clamp(1.9rem, 4vw, 2.8rem);
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family:"Muli", system-ui, -apple-system, Segoe UI, Inter, Roboto, Helvetica, Arial, sans-serif;
+      line-height:1.75;
+    }
+
+    .layout{ min-height:100vh; }
+    .sidebar{
+      background:var(--sidebar-bg);
+      border-right:1px solid var(--border);
+      padding:28px 22px;
+    }
+    @media (min-width: 992px){
+      .layout{ padding-left:var(--sidebar-w); }
+      .sidebar{ position:fixed; inset:0 auto 0 0; width:var(--sidebar-w); }
+    }
+
+    .name{
+      margin:0;
+      text-align:center;
+      font-family:"Saira Extra Condensed", sans-serif;
+      font-size:var(--step-1);
+      line-height:1.05;
+    }
+    .name span{ color:var(--primary); }
+    .subheading{
+      color:var(--muted);
+      text-align:center;
+      font-size:.95rem;
+      margin:4px 0 22px;
+    }
+
+    .navlinks{ display:flex; flex-direction:column; gap:4px; }
+    .navlinks a{
+      text-decoration:none;
+      color:var(--text);
+      padding:8px 4px;
+      border-left:2px solid transparent;
+    }
+    .navlinks a:hover,
+    .navlinks a[aria-current="true"]{
+      color:var(--primary);
+      border-left-color:var(--primary);
+      padding-left:10px;
+    }
+
+    .content{ max-width:var(--content-w); margin:0 auto; padding:46px 28px 70px; }
+    .post-header{ border-bottom:1px solid var(--border); margin-bottom:22px; padding-bottom:16px; }
+    .post-title{ margin:0; font-size:clamp(2rem, 4vw, 2.7rem); line-height:1.15; letter-spacing:-.02em; }
+    .post-meta{ color:var(--muted); margin:8px 0 0; }
+
+    .blog-body p{ margin:0 0 1.1rem; }
+    .note{ color:var(--muted); font-size:.92rem; border-top:1px solid var(--border); padding-top:14px; margin-top:18px; }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <h1 class="name">Claudio <span>Palominos</span></h1>
+    <p class="subheading">Blog entry</p>
+    <nav class="navlinks" aria-label="Sidebar navigation">
+      <a href="index.html">Main page</a>
+      <a href="#" aria-current="true">Current post</a>
+    </nav>
+  </aside>
+
+  <main class="layout">
+    <article class="content">
+      <header class="post-header">
+        <h2 class="post-title">Lexical meaning is lower dimensional in psychosis</h2>
+        <p class="post-meta">May 23, 2026</p>
+      </header>
+
+<section class="blog-body">
+
+  <p>
+    In a paper published last year in 
+    <a href="https://www.nature.com/articles/s41598-025-30443-1" target="_blank">
+      Scientific Reports
+    </a>, 
+    we explored a relatively simple but interesting question: 
+    <strong>what if psychotic speech can be characterized by the underlying geometry of meaning itself?</strong>
+  </p>
+
+  <p>
+    A large amount of computational work on psychosis and language has focused on semantic similarity. 
+    In general, studies repeatedly find that words produced by patients tend to be more semantically similar 
+    to one another than in healthy controls. In practical terms, discourse can become more repetitive, narrower, 
+    or “closer together” in semantic space. Previous work using word embeddings and language models has shown 
+    this pattern across different datasets and tasks.
+  </p>
+
+  <p>
+    In this paper, we tried to push that idea one step further.
+  </p>
+
+  <p>
+    Instead of only asking whether words are more similar, we asked whether the dimensionality of semantic 
+    space itself becomes reduced in psychosis. The intuition is relatively straightforward. Imagine speech as 
+    movement through a high-dimensional landscape of meanings. In typical discourse, trajectories may explore 
+    many semantic directions. But if speech becomes more constrained or compressed, 
+    <strong>the effective number of independent semantic directions may decrease.</strong>
+  </p>
+
+  <p>
+    To test this, we used embeddings from language models to represent speech samples mathematically as vectors 
+    in semantic space. Then we applied dimensionality reduction techniques, mainly 
+    <a href="https://en.wikipedia.org/wiki/Principal_component_analysis" target="_blank">
+      Principal Component Analysis (PCA)
+    </a>, 
+    to estimate how reducible these spaces were.
+  </p>
+
+  <ul>
+    <li>How many components were needed to explain most of the variance,</li>
+    <li>how much variance was captured by the first few components,</li>
+    <li>and estimates of intrinsic dimensionality (ID).</li>
+  </ul>
+
+  <p>
+    The datasets included speech samples in three different languages, which was important because many 
+    computational findings in psychiatry remain heavily English-centered. Despite linguistic differences, 
+    <strong>the pattern was remarkably consistent: speech from psychosis groups showed higher reducibility 
+    and lower effective dimensionality across datasets.</strong>
+  </p>
+
+  <p>
+    What makes this interesting is that it potentially reframes several previous findings under a more unified perspective.
+  </p>
+
+  <p>
+    Higher semantic similarity, repetitive associations, restricted semantic exploration, and related phenomena 
+    may all reflect a deeper geometric property of discourse organization. Rather than isolated markers, they 
+    could emerge from changes in the structure of semantic space itself.
+  </p>
+
+  <p>
+    This also connects computational psychiatry more directly with broader ideas from dynamical systems, geometry, 
+    and network organization. Recent years have seen increasing interest in describing cognition using concepts 
+    such as manifolds, trajectories, intrinsic dimensionality, and geometric constraints. 
+    <strong>The present work suggests that these ideas may not only apply to neural activity or artificial systems, 
+    but also to the organization of meaning in natural language.</strong>
+  </p>
+
+  <p>
+    The paper does not argue that psychosis means “less complex language.” The phenomenon is likely more subtle. 
+    A lower-dimensional semantic space may reflect stronger attraction toward certain semantic regions, altered 
+    contextual transitions, or reduced flexibility in navigating conceptual space. In other words, the issue may 
+    concern how meanings are organized and traversed, not merely vocabulary size or grammatical ability.
+  </p>
+
+  <p>
+    There are also important methodological implications. Much of current NLP-based psychiatric research relies 
+    on large collections of individual features whose interpretation can become obscure. Looking at the geometry 
+    of semantic organization offers a potentially more foundational level of analysis. 
+    <strong>It shifts attention from isolated markers toward the global structure underlying them.</strong>
+  </p>
+
+  <p>
+    Of course, there are still many open questions. We do not know exactly which cognitive or neurobiological 
+    mechanisms produce these geometries. Nor is it clear how these semantic constraints evolve longitudinally, 
+    relate to symptoms, or interact with clinical states such as remission or relapse. But the results suggest 
+    that language models can capture not only surface linguistic patterns, but also deeper organizational properties of meaning.
+  </p>
+
+</section>
+
+      <p class="note">Template note: keep only the title, date, and post paragraphs for a clean single-entry format.</p>
+    </article>
+  </main>
+</body>
+</html>
