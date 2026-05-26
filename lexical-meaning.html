@@ -122,7 +122,7 @@
       <header class="post-header">
         <h2 class="post-title">Lexical meaning is lower dimensional in psychosis</h2>
         <p class="post-meta">May 23, 2026</p>
-        <button class="lang-toggle" id="translationToggle" type="button" aria-pressed="false">Versión en castellano (Chile)</button>
+        <button class="lang-toggle" id="translationToggle" type="button" aria-pressed="false">Versión en castellano</button>
       </header>
 
 <section class="entry-version" data-lang="en">
@@ -352,14 +352,14 @@
       if (isSpanishVisible) {
         spanishVersion.setAttribute('hidden', '');
         englishVersion.removeAttribute('hidden');
-        toggleButton.textContent = 'Ver versión en español (Chile)';
+        toggleButton.textContent = 'Versión en castellano';
         toggleButton.setAttribute('aria-pressed', 'false');
         return;
       }
 
       englishVersion.setAttribute('hidden', '');
       spanishVersion.removeAttribute('hidden');
-      toggleButton.textContent = 'Show original in English';
+      toggleButton.textContent = 'Show original';
       toggleButton.setAttribute('aria-pressed', 'true');
     });
   </script>
