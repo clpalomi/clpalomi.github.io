@@ -17,13 +17,12 @@
     .navlinks{display:flex;flex-direction:column;gap:4px}.navlinks a{text-decoration:none;color:var(--text);padding:8px 4px;border-left:2px solid transparent}
     .navlinks a:hover,.navlinks a[aria-current="true"]{color:var(--primary);border-left-color:var(--primary);padding-left:10px}
     .content{max-width:var(--content-w);margin:0 auto;padding:46px 28px 70px}
-    .page-title{margin:0 0 10px;font-size:clamp(2rem,4vw,2.7rem);line-height:1.15;letter-spacing:-.02em}
-    .post-list{display:grid;gap:16px}
-    .post-card{border:1px solid var(--border);padding:18px 20px;border-radius:8px;background:#fff}
-    .post-card h3{margin:0 0 2px;font-size:1.3rem}
-    .post-meta{color:var(--muted);font-size:.95rem;margin-bottom:8px}
-    .post-card p{margin:0 0 10px}
-    .post-card a{color:var(--primary);text-decoration:none;font-weight:700}
+    .post-list{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+    .post-item{display:grid;grid-template-columns:minmax(130px,150px) minmax(90px,120px) 1fr;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid var(--border)}
+    .post-date,.post-category{color:var(--muted);font-size:.95rem}
+    .post-item a{color:var(--text);text-decoration:none}
+    .post-item a:hover{color:var(--primary)}
+    @media (max-width:680px){.post-item{grid-template-columns:1fr;gap:2px;padding:8px 0}}
   </style>
 </head>
 <body>
@@ -38,14 +37,13 @@
 
   <main class="layout">
     <section class="content">
-      <h2 class="page-title">Blog</h2>
-      <div class="post-list">
-        <article class="post-card">
-          <h3>Lexical meaning is lower dimensional in psychosis</h3>
-          <div class="post-meta">May 23, 2026</div>
-          <a href="lexical-meaning.html">Read post →</a>
-        </article>
-      </div>
+      <ul class="post-list" aria-label="Blog entries ordered by date">
+        <li class="post-item">
+          <span class="post-date">2026-05-23</span>
+          <span class="post-category">Research</span>
+          <a href="lexical-meaning.html">Lexical meaning is lower dimensional in psychosis</a>
+        </li>
+      </ul>
     </section>
   </main>
 </body>
