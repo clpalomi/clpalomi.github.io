@@ -75,6 +75,33 @@
     .post-title{ margin:0; font-size:clamp(2rem, 4vw, 2.7rem); line-height:1.15; letter-spacing:-.02em; }
     .post-meta{ color:var(--muted); margin:8px 0 0; }
 
+    .lang-toggle{
+      margin-top:14px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border:1px solid var(--border);
+      background:transparent;
+      color:var(--muted);
+      padding:5px 11px;
+      border-radius:999px;
+      font:inherit;
+      font-size:.82rem;
+      letter-spacing:.03em;
+      text-transform:uppercase;
+      cursor:pointer;
+      transition:all .2s ease;
+    }
+
+    .lang-toggle:hover,
+    .lang-toggle:focus-visible{
+      color:var(--primary);
+      border-color:var(--primary);
+      outline:none;
+    }
+
+    .entry-version[hidden]{ display:none; }
+
     .blog-body p{ margin:0 0 1.1rem; }
     .note{ color:var(--muted); font-size:.92rem; border-top:1px solid var(--border); padding-top:14px; margin-top:18px; }
   </style>
@@ -95,8 +122,10 @@
       <header class="post-header">
         <h2 class="post-title">Lexical meaning is lower dimensional in psychosis</h2>
         <p class="post-meta">May 23, 2026</p>
+        <button class="lang-toggle" id="translationToggle" type="button" aria-pressed="false">Versión en castellano (Chile)</button>
       </header>
 
+<section class="entry-version" data-lang="en">
 <section class="blog-body">
 
   <p>
@@ -198,11 +227,141 @@
   </p>
 
 </section>
+</section>
 
-      <p class="note">Palominos, C., Stein, F., Kircher, T., Ayesa-Arriola, R., Palaniyappan, L., Homan, P., ... & Hinzen, W. (2025). 
+<section class="entry-version" data-lang="es" hidden>
+<section class="blog-body">
+
+  <p>
+    En un artículo publicado el año pasado en
+    <a href="https://www.nature.com/articles/s41598-025-30443-1" target="_blank">
+      Scientific Reports
+    </a>,
+    exploramos una pregunta relativamente simple, pero bien interesante:
+    <strong>¿Qué pasa si el habla asociada a la psicosis se puede caracterizar por la geometría subyacente del significado mismo?</strong>
+  </p>
+
+  <p>
+    ¿Y qué quiero decir con la <i>geometría del significado</i>? Una forma de pensarlo es imaginar que las palabras
+    y las ideas viven en una especie de mapa abstracto. Así como las ciudades pueden estar más cerca o más lejos
+    entre sí en un mapa geográfico, los significados también pueden estar más cerca o más lejos en el lenguaje.
+    Por ejemplo, palabras como “perro”, “gato” y “animal” ocuparían zonas cercanas porque están relacionadas,
+    mientras que palabras como “justicia” o “Cheerios” quedarían bastante más lejos. Los modelos de lenguaje actuales
+    aprenden estas relaciones automáticamente a partir de grandes cantidades de texto y representan las palabras
+    como posiciones dentro de un paisaje semántico enorme. Pero, a diferencia de un mapa normal que se despliega en
+    dos dimensiones, o del espacio físico observable en tres dimensiones, estos espacios se modelan con muchas
+    dimensiones distintas, miles de ellas en algunos modelos. Cuando hablamos, podemos imaginar el discurso como
+    un recorrido por ese paisaje, saltando de una región de significado a otra.
+  </p>
+
+  <p>
+    Los modelos de lenguaje grandes, como los que están detrás de chatbots como ChatGPT, representan las palabras
+    como puntos en un espacio semántico muy amplio. Eso permite imaginar el habla como una trayectoria que se mueve
+    por el paisaje del significado. Cuando las personas hablan, su discurso puede desplazarse por muchas direcciones
+    semánticas o quedarse confinado en una región más acotada. Si los significados se agrupan una y otra vez en zonas
+    similares, la trayectoria explora menos espacio y el habla puede volverse más repetitiva o semánticamente restringida.
+  </p>
+
+  <p>
+    Gran parte del trabajo computacional sobre psicosis y lenguaje se ha enfocado en la similitud semántica,
+    y los estudios muestran de forma consistente que las palabras producidas por pacientes tienden a ser más similares
+    entre sí que en controles sanos. Trabajos previos con embeddings y modelos de lenguaje han mostrado este patrón
+    en distintos conjuntos de datos y tareas.
+  </p>
+
+  <p>
+    En este trabajo intentamos llevar esa idea un paso más allá.
+  </p>
+
+  <p>
+    En vez de preguntar solo si las palabras son más similares, preguntamos si la dimensionalidad del espacio semántico
+    mismo se reduce en psicosis. La intuición es que, si el habla explora menos direcciones semánticas independientes,
+    entonces las dimensiones efectivas necesarias para describirla también deberían ser menores.
+    Para probarlo, usamos embeddings de modelos de lenguaje para representar muestras de habla como vectores en ese espacio.
+    Luego aplicamos técnicas de reducción de dimensionalidad, principalmente Análisis de Componentes Principales (PCA),
+    junto con estimaciones de dimensionalidad intrínseca (ID), para evaluar qué tan reducibles eran esos espacios semánticos.
+    En concreto, nos hicimos preguntas como:
+  </p>
+
+  <ul>
+    <li>¿Cuántos componentes se necesitan para explicar la mayor parte de la varianza?</li>
+    <li>¿Cuánta varianza capturan los primeros componentes?</li>
+    <li>¿Cuál es la dimensionalidad efectiva mínima necesaria para describir una muestra de habla?</li>
+  </ul>
+
+  <p>
+    Los datos incluían muestras de habla en tres idiomas distintos, lo cual era importante porque muchos hallazgos
+    computacionales en psiquiatría siguen siendo muy anglocéntricos. A pesar de las diferencias lingüísticas,
+    <strong>el patrón fue notablemente consistente: los grupos con psicosis mostraron mayor reducibilidad
+    y menor dimensionalidad efectiva en todos los datasets.</strong>
+  </p>
+
+  <p>
+    Lo interesante de esto es que podría reinterpretar varios hallazgos previos bajo una perspectiva más unificada.
+    Mayor similitud semántica, asociaciones repetitivas, exploración semántica restringida y fenómenos relacionados
+    podrían reflejar una propiedad geométrica más profunda de la organización del discurso. En lugar de ser marcadores
+    aislados, podrían emerger de cambios en la estructura del propio espacio semántico.
+  </p>
+
+  <p>
+    Esto también conecta la psiquiatría computacional de forma más directa con ideas amplias de sistemas dinámicos,
+    geometría y organización en redes. En los últimos años ha crecido el interés por describir la cognición usando
+    conceptos como variedades, trayectorias, dimensionalidad intrínseca y restricciones geométricas.
+    <strong>Este trabajo sugiere que estas ideas podrían aplicarse no solo a actividad neural o sistemas artificiales,
+    sino también a la organización del significado en el lenguaje natural.</strong> El artículo no plantea que la psicosis
+    implique “lenguaje menos complejo”. El fenómeno probablemente es más sutil.
+    Un espacio semántico de menor dimensión podría reflejar una atracción más fuerte hacia ciertas regiones semánticas,
+    transiciones contextuales alteradas o menor flexibilidad para navegar el espacio conceptual. O sea, el tema puede estar
+    en cómo se organizan y recorren los significados, más que en el tamaño del vocabulario o la habilidad gramatical.
+  </p>
+
+  <p>
+    También hay implicancias metodológicas importantes. Mucha investigación psiquiátrica basada en NLP depende de
+    grandes colecciones de rasgos individuales cuya interpretación a veces se vuelve poco clara. Mirar la geometría
+    de la organización semántica ofrece un nivel de análisis potencialmente más fundacional.
+    <strong>Desplaza la atención desde marcadores aislados hacia la estructura global que los sostiene.</strong>
+  </p>
+
+  <p>
+    Obvio, todavía quedan varias preguntas abiertas. No sabemos exactamente qué mecanismos cognitivos o neurobiológicos
+    producen estas geometrías. Tampoco está claro cómo evolucionan longitudinalmente estas restricciones semánticas,
+    cómo se relacionan con síntomas, o cómo interactúan con estados clínicos como remisión o recaída. Pero los resultados
+    sugieren que los modelos de lenguaje pueden capturar no solo patrones lingüísticos superficiales, sino también propiedades
+    organizacionales más profundas del significado. Creo que este estudio aporta a una literatura creciente que trata el lenguaje
+    como una ventana a la organización cognitiva latente, y que los modelos de lenguaje por fin nos están dando herramientas
+    para estudiar esas propiedades.
+  </p>
+
+</section>
+</section>
+
+      <p class="note">Palominos, C., Stein, F., Kircher, T., Ayesa-Arriola, R., Palaniyappan, L., Homan, P., ... & Hinzen, W. (2025).
         Lexical meaning is lower dimensional in psychosis. Scientific Reports.</p>
 
     </article>
   </main>
+
+  <script>
+    const toggleButton = document.getElementById('translationToggle');
+    const englishVersion = document.querySelector('[data-lang="en"]');
+    const spanishVersion = document.querySelector('[data-lang="es"]');
+
+    toggleButton.addEventListener('click', () => {
+      const isSpanishVisible = !spanishVersion.hasAttribute('hidden');
+
+      if (isSpanishVisible) {
+        spanishVersion.setAttribute('hidden', '');
+        englishVersion.removeAttribute('hidden');
+        toggleButton.textContent = 'Ver versión en español (Chile)';
+        toggleButton.setAttribute('aria-pressed', 'false');
+        return;
+      }
+
+      englishVersion.setAttribute('hidden', '');
+      spanishVersion.removeAttribute('hidden');
+      toggleButton.textContent = 'Show original in English';
+      toggleButton.setAttribute('aria-pressed', 'true');
+    });
+  </script>
 </body>
 </html>
