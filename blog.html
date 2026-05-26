@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blog — Claudio Palominos</title>
+  <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:600,700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,700,800&display=swap" rel="stylesheet" />
+  <style>
+    :root{--primary:#1f5f8b;--bg:#fff;--sidebar-bg:#f7f7f5;--muted:#666f78;--text:#1f2328;--border:#e6e2dc;--sidebar-w:300px;--content-w:820px;--step-1:clamp(1.9rem,4vw,2.8rem)}
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:"Muli",system-ui,-apple-system,Segoe UI,Inter,Roboto,Helvetica,Arial,sans-serif;line-height:1.7}
+    .layout{min-height:100vh}.sidebar{background:var(--sidebar-bg);border-right:1px solid var(--border);padding:28px 22px}
+    @media (min-width:992px){.layout{padding-left:var(--sidebar-w)}.sidebar{position:fixed;inset:0 auto 0 0;width:var(--sidebar-w)}}
+    .name{margin:0;text-align:center;font-family:"Saira Extra Condensed",sans-serif;font-size:var(--step-1);line-height:1.05}.name span{color:var(--primary)}
+    .subheading{color:var(--muted);text-align:center;font-size:.95rem;margin:4px 0 22px}
+    .navlinks{display:flex;flex-direction:column;gap:4px}.navlinks a{text-decoration:none;color:var(--text);padding:8px 4px;border-left:2px solid transparent}
+    .navlinks a:hover,.navlinks a[aria-current="true"]{color:var(--primary);border-left-color:var(--primary);padding-left:10px}
+    .content{max-width:var(--content-w);margin:0 auto;padding:46px 28px 70px}
+    .page-title{margin:0 0 10px;font-size:clamp(2rem,4vw,2.7rem);line-height:1.15;letter-spacing:-.02em}
+    .post-list{display:grid;gap:16px}
+    .post-card{border:1px solid var(--border);padding:18px 20px;border-radius:8px;background:#fff}
+    .post-card h3{margin:0 0 2px;font-size:1.3rem}
+    .post-meta{color:var(--muted);font-size:.95rem;margin-bottom:8px}
+    .post-card p{margin:0 0 10px}
+    .post-card a{color:var(--primary);text-decoration:none;font-weight:700}
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <h1 class="name">Claudio <span>Palominos</span></h1>
+    <p class="subheading">Blog entries</p>
+    <nav class="navlinks" aria-label="Sidebar navigation">
+      <a href="index.html">Main page</a>
+      <a href="blog.html" aria-current="true">Blog</a>
+    </nav>
+  </aside>
+
+  <main class="layout">
+    <section class="content">
+      <h2 class="page-title">Blog</h2>
+      <div class="post-list">
+        <article class="post-card">
+          <h3>Lexical meaning is lower dimensional in psychosis</h3>
+          <div class="post-meta">May 23, 2026</div>
+          <p>A short overview of geometric constraints in semantic space and their relation to psychosis-related speech.</p>
+          <a href="lexical-meaning.html">Read post →</a>
+        </article>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
