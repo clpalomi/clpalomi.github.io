@@ -108,10 +108,31 @@
   </p>
 
   <p>
-    A large amount of computational work on psychosis and language has focused on semantic similarity. 
-    In general, studies repeatedly find that words produced by patients tend to be more semantically similar 
-    to one another than in healthy controls. In practical terms, discourse can become more repetitive, narrower, 
-    or “closer together” in semantic space. Previous work using word embeddings and language models has shown 
+    But what do I mean by the <i>geometry of meaning</i>? One way to think about it is to imagine that words 
+    and ideas live in a kind of abstract map. In the same way that cities can be close or far from one another 
+    on a geographic map, meanings can also be close or distant from one another in language. For example, 
+    words like “dog,” “cat,” and “animal” would occupy nearby regions because they are related in meaning, 
+    while words like “justice” or “Cheerios” would lie much farther away. Current language models learn these 
+    relationships automatically from big amounts of text, allowing them to represent words as positions in a 
+    very large semantic landscape. But unlike a regular map, which unfolds in two dimensions on paper, or 
+    the phsysical space in three observable dimensions, these spaces are modeled using many different 
+    dimensions, thousand of them in some language models. When we speak, we can imagine our discourse 
+    as moving through that landscape, jumping from one region of meaning to another.
+  </p>
+  
+  <p>
+    Large models, like the ones behind chatbots such as ChatGPT, represent words as points in a very large semantic space. 
+    Words with similar meanings tend to occupy nearby regions of that space. This allows speech to be imagined not simply 
+    as a sequence of words, but as a trajectory moving through a landscape of meaning. When people speak, their discourse can 
+    move across many semantic directions or remain confined to a narrower region. If meanings repeatedly cluster around similar areas, 
+    the trajectory explores less of the space. In practical terms, speech may become more repetitive, semantically constrained, 
+    or “closer together”.
+  </p>
+  
+  <p>
+    A large amount of computational work on psychosis and language has focused on semantic similarity, and 
+    studies repeatedly find that words produced by patients tend to be more semantically similar 
+    to one another than in healthy controls. Previous work using word embeddings and language models has shown 
     this pattern across different datasets and tasks.
   </p>
 
@@ -121,19 +142,18 @@
 
   <p>
     Instead of only asking whether words are more similar, we asked whether the dimensionality of semantic 
-    space itself becomes reduced in psychosis. The intuition is relatively straightforward. Imagine speech as 
-    movement through a high-dimensional landscape of meanings. In typical discourse, trajectories may explore 
-    many semantic directions. But if speech becomes more constrained or compressed, 
-    <strong>the effective number of independent semantic directions may decrease.</strong>
-    To test this, we used embeddings from language models to represent speech samples mathematically as vectors 
-    in semantic space. Then we applied dimensionality reduction techniques, mainly Principal Component Analysis (PCA),
-    to estimate how reducible these spaces were.
+    space itself becomes reduced in psychosis. The intuition is that that if speech explores fewer independent semantic 
+    directions, then the effective dimensions needed to describe that speech should also become smaller.
+    To test this, we used embeddings from language models to represent speech samples as vectors 
+    in the space. Then we applied dimensionality reduction techniques, mainly Principal Component Analysis (PCA), 
+    together with estimates of intrinsic dimensionality (ID), to evaluate how reducible those semantic spaces
+    were. To do it, we ask questions such as:
   </p>
 
   <ul>
-    <li>How many components were needed to explain most of the variance,</li>
-    <li>how much variance was captured by the first few components,</li>
-    <li>and estimates of intrinsic dimensionality (ID).</li>
+    <li>How many components are needed to explain most of the variance?</li>
+    <li>How much variance is captured by the first few components?</li>
+    <li>What is the minimum effective dimensionality required to describe the speech sample?</li>
   </ul>
 
   <p>
