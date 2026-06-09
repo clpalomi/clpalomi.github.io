@@ -16,6 +16,7 @@
       --muted:#666f78;
       --text:#1f2328;
       --border:#e6e2dc;
+      --link-underline:#8a8f94;
       --sidebar-w:300px;
       --content-w:820px;
       --step-1: clamp(1.9rem, 4vw, 2.8rem);
@@ -103,6 +104,37 @@
     .entry-version[hidden]{ display:none; }
 
     .blog-body p{ margin:0 0 1.1rem; }
+    .blog-body a,
+    .note a{
+      color:inherit;
+      text-decoration-line:underline;
+      text-decoration-color:var(--link-underline);
+      text-underline-offset:.18em;
+      text-decoration-thickness:.08em;
+      transition:color .2s ease, text-decoration-color .2s ease;
+    }
+    .blog-body a:hover,
+    .blog-body a:focus-visible,
+    .note a:hover,
+    .note a:focus-visible{
+      color:var(--primary);
+      text-decoration-color:var(--muted);
+    }
+    .blog-body figure{
+      max-width:620px;
+      margin:1.6rem auto 1.8rem;
+    }
+    .blog-body img{
+      display:block;
+      width:100%;
+      height:auto;
+    }
+    .blog-body figcaption{
+      color:var(--muted);
+      font-size:.92rem;
+      line-height:1.55;
+      margin-top:.7rem;
+    }
     .note{ color:var(--muted); font-size:.92rem; border-top:1px solid var(--border); padding-top:14px; margin-top:18px; }
   </style>
 </head>
@@ -131,9 +163,9 @@
   <p>
   In 2023, we published
   <a href="https://academic.oup.com/schizophreniabulletin/article/49/Supplement_2/S153/7083526" target="_blank" rel="noopener noreferrer">
-    <em>a paper on coreference</em>
+    a paper on coreference
   </a>,
-    in Schizophrenia Bulletin, in collaboration with
+    in <em>Schizophrenia Bulletin</em>, in collaboration with
   <a href="https://portafolio-academico.uchile.cl/perfil/35282-Alicia-Ivonne-Eduvigis-Figueroa-Barra" target="_blank" rel="noopener noreferrer">
     Alicia Figueroa-Barra
   </a>
@@ -170,6 +202,13 @@
 </p>
 
 <p>
+  From this perspective, referential speech graphs are not merely graphs of discourse cohesion; they are
+  approximations of the evolving architecture through which speakers construct and maintain a shared world of
+  reference. In schizophrenia, alterations in these networks may therefore reflect disruptions in the linguistic
+  foundations of thought itself.
+</p>
+  
+<p>
   You can use the
   <a href="https://speechgraphs.claudiopalominos.com/" target="_blank" rel="noopener noreferrer">
     speech graphs renderer
@@ -185,11 +224,10 @@
 <section class="blog-body">
 
   <p>
-  En 2023 publicamos un artículo sobre correferencia en
+  En 2023 publicamos
   <a href="https://academic.oup.com/schizophreniabulletin/article/49/Supplement_2/S153/7083526" target="_blank" rel="noopener noreferrer">
-    <em>Schizophrenia Bulletin</em>
-  </a>,
-  en colaboración con
+   un artículo sobre correferencia
+  </a> en <em>Schizophrenia Bulletin</em>, junto a
   <a href="https://portafolio-academico.uchile.cl/perfil/35282-Alicia-Ivonne-Eduvigis-Figueroa-Barra" target="_blank" rel="noopener noreferrer">
     Alicia Figueroa-Barra
   </a>
@@ -200,12 +238,12 @@
 </p>
 
 <p>
-  Este trabajo surgió inspirado en los grafos de habla desarrollados por Natalia Mota y colaboradores,
-  quienes representaron el discurso como una red de palabras conectadas según su sucesión temporal.
-  Nosotros quisimos abordar una pregunta distinta: ¿cómo siguen los hablantes las distintas entidades
-  de las que hablan a lo largo de un discurso? Esta pregunta es particularmente relevante porque diversos
-  estudios han sugerido que la referencialidad —es decir, la capacidad de introducir, mantener y recuperar
-  referentes en una conversación o narración— se encuentra alterada en la esquizofrenia.
+  Este trabajo se inspiró en un principio en los speech graphs desarrollados por Natalia Mota y colegas,
+  quienes representaban el discurso como una red de palabras conectadas de acuerdo a una sucesión temporal.
+  Nosotros quisimos abordar una pregunta distinta: cómo los hablantes siguen la pista de las distintas
+  entidades de las que hablan a lo largo de un discurso. Nos interesaba esta pregunta porque
+  diversos estudios han sugerido que la referencialidad —es decir, la capacidad de introducir, mantener y
+  recuperar referentes en una conversación o narración— se encuentra alterada en la esquizofrenia.
 </p>
 
 <figure>
@@ -220,22 +258,28 @@
 </figure>
 
 <p>
-  Encontramos que las personas con esquizofrenia producían una mayor densidad de frases nominales y una
-  mayor cantidad de reapariciones de entidades previamente introducidas. Más interesante aún, estas
+  Encontramos que los pacientes con esquizofrenia producían una mayor densidad de sintagmas nominales y una
+  mayor cantidad de reapariciones de entidades previamente introducidas. Aún más, estas
   reapariciones tendían a ocurrir a distancias topológicas mayores dentro del grafo, lo que sugiere una
   ampliación de la ventana temporal en la que los referentes permanecen activos y pueden ser retomados
-  posteriormente. Utilizando medidas derivadas de estos grafos, fue posible distinguir entre participantes
-  con esquizofrenia y controles con una precisión del 84,2%.
+  posteriormente.
 </p>
 
 <p>
+  Desde esta perspectiva, los grafos referenciales del habla no son solamente grafos de cohesión discursiva:
+  son aproximaciones a la arquitectura cambiante mediante la cual los hablantes construyen y sostienen un
+  mundo compartido de referencia. En esquizofrenia, las alteraciones de estas redes podrían reflejar,
+  por lo tanto, disrupciones en los fundamentos lingüísticos del pensamiento mismo.
+</p>
+  
+<p>
   Puedes utilizar el
   <a href="https://speechgraphs.claudiopalominos.com/" target="_blank" rel="noopener noreferrer">
-    visualizador de grafos referenciales
+    speech graphs renderer
   </a>
-  para explorar este tipo de representaciones. Por ahora, la anotación automática de entidades y frases
+  para explorar este tipo de representaciones. Por ahora, la anotación automática de entidades y sintagmas
   nominales todavía no está implementada. Sin embargo, los textos pueden anotarse manualmente siguiendo
-  el esquema propuesto, permitiendo construir y visualizar los grafos de referencia a partir de cualquier
+  el esquema propuesto, lo que permite construir y visualizar los grafos de referencia a partir de cualquier
   muestra de discurso.
 </p>
 
