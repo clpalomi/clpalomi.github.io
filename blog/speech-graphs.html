@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blog — Claudio Palominos</title>
+  <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:600,700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,700,800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root{
+      --primary:#1f5f8b;
+      --bg:#ffffff;
+      --sidebar-bg:#f7f7f5;
+      --muted:#666f78;
+      --text:#1f2328;
+      --border:#e6e2dc;
+      --sidebar-w:300px;
+      --content-w:820px;
+      --step-1: clamp(1.9rem, 4vw, 2.8rem);
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family:"Muli", system-ui, -apple-system, Segoe UI, Inter, Roboto, Helvetica, Arial, sans-serif;
+      line-height:1.75;
+    }
+
+    .layout{ min-height:100vh; }
+    .sidebar{
+      background:var(--sidebar-bg);
+      border-right:1px solid var(--border);
+      padding:28px 22px;
+    }
+    @media (min-width: 992px){
+      .layout{ padding-left:var(--sidebar-w); }
+      .sidebar{ position:fixed; inset:0 auto 0 0; width:var(--sidebar-w); }
+    }
+
+    .name{
+      margin:0;
+      text-align:center;
+      font-family:"Saira Extra Condensed", sans-serif;
+      font-size:var(--step-1);
+      line-height:1.05;
+    }
+    .name span{ color:var(--primary); }
+    .subheading{
+      color:var(--muted);
+      text-align:center;
+      font-size:.95rem;
+      margin:4px 0 22px;
+    }
+
+    .navlinks{ display:flex; flex-direction:column; gap:4px; }
+    .navlinks a{
+      text-decoration:none;
+      color:var(--text);
+      padding:8px 4px;
+      border-left:2px solid transparent;
+    }
+    .navlinks a:hover,
+    .navlinks a[aria-current="true"]{
+      color:var(--primary);
+      border-left-color:var(--primary);
+      padding-left:10px;
+    }
+
+    .content{ max-width:var(--content-w); margin:0 auto; padding:46px 28px 70px; }
+    .post-header{ border-bottom:1px solid var(--border); margin-bottom:22px; padding-bottom:16px; }
+    .post-title{ margin:0; font-size:clamp(2rem, 4vw, 2.7rem); line-height:1.15; letter-spacing:-.02em; }
+    .post-meta{ color:var(--muted); margin:8px 0 0; }
+
+    .lang-toggle{
+      margin-top:14px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border:1px solid var(--border);
+      background:transparent;
+      color:var(--muted);
+      padding:5px 11px;
+      border-radius:999px;
+      font:inherit;
+      font-size:.82rem;
+      letter-spacing:.03em;
+      text-transform:uppercase;
+      cursor:pointer;
+      transition:all .2s ease;
+    }
+
+    .lang-toggle:hover,
+    .lang-toggle:focus-visible{
+      color:var(--primary);
+      border-color:var(--primary);
+      outline:none;
+    }
+
+    .entry-version[hidden]{ display:none; }
+
+    .blog-body p{ margin:0 0 1.1rem; }
+    .note{ color:var(--muted); font-size:.92rem; border-top:1px solid var(--border); padding-top:14px; margin-top:18px; }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <h1 class="name">Claudio <span>Palominos</span></h1>
+     <p class="subheading">Blog</p>
+    <nav class="navlinks" aria-label="Sidebar navigation">
+      <a href="index.html">Main page</a>
+      <a href="blog.html">Blog</a>
+      <a href="lexical-meaning.html" aria-current="true">Current post</a>
+    </nav>
+  </aside>
+
+  <main class="layout">
+    <article class="content">
+      <header class="post-header">
+        <h2 class="post-title">Speech graphs and referentiality</h2>
+        <p class="post-meta">June 9, 2026</p>
+        <button class="lang-toggle" id="translationToggle" type="button" aria-pressed="false">Versión en castellano</button>
+      </header>
+
+<section class="entry-version" data-lang="en">
+<section class="blog-body">
+
+  <p>
+  In 2023, we published a paper on coreference in
+  <a href="https://academic.oup.com/schizophreniabulletin/article/49/Supplement_2/S153/7083526" target="_blank" rel="noopener noreferrer">
+    <em>Schizophrenia Bulletin</em>
+  </a>,
+  in collaboration with
+  <a href="https://scholar.google.com/scholar?q=Alicia+Figueroa-Barra" target="_blank" rel="noopener noreferrer">
+    Alicia Figueroa-Barra
+  </a>
+  and
+  <a href="https://www.icrea.cat/Web/ScientificForm.aspx?key=373" target="_blank" rel="noopener noreferrer">
+    Wolfram Hinzen
+  </a>.
+</p>
+
+<p>
+  We were inspired by Natalia Mota's work on speech graphs, which represented discourse as a network of words
+  connected by their temporal succession. Our focus was referential. We wanted to study how
+  speakers keep track of the different entities they refer to throughout discourse. This was motivated by the
+  idea that referentiality is impaired in schizophrenia, especially when speakers need to maintain and reintroduce
+  the same entities across time.
+</p>
+
+<figure>
+  <img
+    src="assets/img/speech-graph-ex.png"
+    alt="Example of a referential speech graph"
+  />
+  <figcaption>
+    Example of a referential speech graph, where nodes represent entities introduced by noun phrases and edges
+    represent progression through discourse.
+  </figcaption>
+</figure>
+
+<p>
+  In the study, we found that patients with schizophrenia produced a higher density of noun phrases and more
+  recurrences of previously introduced entities. Crucially, these recurrences tended to occur across larger
+  topological distances, suggesting a widening of the temporal window in which entities are maintained and
+  reactivated in discourse.
+</p>
+
+<p>
+  You can use the
+  <a href="https://speechgraphs.claudiopalominos.com/" target="_blank" rel="noopener noreferrer">
+    speech graphs renderer
+  </a>
+  to visualize referential speech graphs. The automatic annotation of entities and noun phrases has not yet been
+  developed, but texts can be annotated manually following the proposed scheme.
+</p>
+
+</section>
+</section>
+
+<section class="entry-version" data-lang="es" hidden>
+<section class="blog-body">
+
+  <p>
+  En 2023 publicamos un artículo sobre correferencia en
+  <a href="https://academic.oup.com/schizophreniabulletin/article/49/Supplement_2/S153/7083526" target="_blank" rel="noopener noreferrer">
+    <em>Schizophrenia Bulletin</em>
+  </a>,
+  en colaboración con
+  <a href="https://scholar.google.com/scholar?q=Alicia+Figueroa-Barra" target="_blank" rel="noopener noreferrer">
+    Alicia Figueroa-Barra
+  </a>
+  y
+  <a href="https://www.icrea.cat/Web/ScientificForm.aspx?key=373" target="_blank" rel="noopener noreferrer">
+    Wolfram Hinzen
+  </a>.
+</p>
+
+<p>
+  Este trabajo surgió inspirado en los grafos de habla desarrollados por Natalia Mota y colaboradores,
+  quienes representaron el discurso como una red de palabras conectadas según su sucesión temporal.
+  Nosotros quisimos abordar una pregunta distinta: ¿cómo siguen los hablantes las distintas entidades
+  de las que hablan a lo largo de un discurso? Esta pregunta es particularmente relevante porque diversos
+  estudios han sugerido que la referencialidad —es decir, la capacidad de introducir, mantener y recuperar
+  referentes en una conversación o narración— se encuentra alterada en la esquizofrenia.
+</p>
+
+<figure>
+  <img
+    src="assets/img/speech-graph-ex.png"
+    alt="Ejemplo de un grafo referencial del discurso"
+  />
+  <figcaption>
+    Ejemplo de un grafo referencial del discurso. Los nodos representan entidades introducidas mediante
+    frases nominales, mientras que las conexiones representan su progresión a lo largo del discurso.
+  </figcaption>
+</figure>
+
+<p>
+  Encontramos que las personas con esquizofrenia producían una mayor densidad de frases nominales y una
+  mayor cantidad de reapariciones de entidades previamente introducidas. Más interesante aún, estas
+  reapariciones tendían a ocurrir a distancias topológicas mayores dentro del grafo, lo que sugiere una
+  ampliación de la ventana temporal en la que los referentes permanecen activos y pueden ser retomados
+  posteriormente. Utilizando medidas derivadas de estos grafos, fue posible distinguir entre participantes
+  con esquizofrenia y controles con una precisión del 84,2%.
+</p>
+
+<p>
+  Puedes utilizar el
+  <a href="https://speechgraphs.claudiopalominos.com/" target="_blank" rel="noopener noreferrer">
+    visualizador de grafos referenciales
+  </a>
+  para explorar este tipo de representaciones. Por ahora, la anotación automática de entidades y frases
+  nominales todavía no está implementada. Sin embargo, los textos pueden anotarse manualmente siguiendo
+  el esquema propuesto, permitiendo construir y visualizar los grafos de referencia a partir de cualquier
+  muestra de discurso.
+</p>
+
+</section>
+</section>
+
+  <p class="note">
+  References: 
+    <br>
+  Mota, N. B., Vasconcelos, N. A. P., Lemos, N., Pieretti, A. C., Kinouchi, O., Cecchi, G. A.,
+  Copelli, M., & Ribeiro, S. (2012). Speech graphs provide a quantitative measure of thought disorder in psychosis.
+  <em>PLOS ONE</em>, 7(4), e34928.
+  <a href="https://doi.org/10.1371/journal.pone.0034928" target="_blank" rel="noopener noreferrer">https://doi.org/10.1371/journal.pone.0034928</a>.
+    <br>
+  Mota, N. B., Copelli, M., & Ribeiro, S. (2017). Thought disorder measured as random speech structure classifies
+  negative symptoms and schizophrenia diagnosis 6 months in advance. <em>NPJ Schizophrenia</em>, 3, 18.
+  <a href="https://doi.org/10.1038/s41537-017-0019-3" target="_blank" rel="noopener noreferrer">https://doi.org/10.1038/s41537-017-0019-3</a>.
+    <br>
+  Palominos, C., Figueroa-Barra, A., & Hinzen, W. (2023). Coreference delays in psychotic discourse: widening the
+  temporal window. <em>Schizophrenia Bulletin</em>, 49(Supplement_2), S153–S162.
+  <a href="https://doi.org/10.1093/schbul/sbac102" target="_blank" rel="noopener noreferrer">https://doi.org/10.1093/schbul/sbac102</a>.
+</p>
+
+    </article>
+  </main>
+
+  <script>
+    const toggleButton = document.getElementById('translationToggle');
+    const englishVersion = document.querySelector('[data-lang="en"]');
+    const spanishVersion = document.querySelector('[data-lang="es"]');
+
+    toggleButton.addEventListener('click', () => {
+      const isSpanishVisible = !spanishVersion.hasAttribute('hidden');
+
+      if (isSpanishVisible) {
+        spanishVersion.setAttribute('hidden', '');
+        englishVersion.removeAttribute('hidden');
+        toggleButton.textContent = 'Versión en castellano';
+        toggleButton.setAttribute('aria-pressed', 'false');
+        return;
+      }
+
+      englishVersion.setAttribute('hidden', '');
+      spanishVersion.removeAttribute('hidden');
+      toggleButton.textContent = 'Show original';
+      toggleButton.setAttribute('aria-pressed', 'true');
+    });
+  </script>
+</body>
+</html>
