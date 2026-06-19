@@ -110,14 +110,29 @@
       padding-top:18px;
       border-top:1px solid var(--border);
     }
-    .sidebar-projects h3{
-      margin:0 0 10px;
+    .sidebar-projects summary{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+      margin:0;
       color:var(--muted);
       font-size:.82rem;
       font-weight:800;
       letter-spacing:.08em;
       text-transform:uppercase;
+      cursor:pointer;
+      list-style:none;
     }
+    .sidebar-projects summary::-webkit-details-marker{ display:none; }
+    .sidebar-projects summary::after{
+      content:"+";
+      color:var(--primary);
+      font-size:1rem;
+      line-height:1;
+    }
+    .sidebar-projects[open] summary::after{ content:"−"; }
+    .sidebar-project-list{ margin-top:10px; }
     .sidebar-project{
       display:block;
       padding:10px;
@@ -289,13 +304,19 @@
         <a href="#interests"><i class="fa-regular fa-heart"></i> Interests</a>
       </nav>
 
-      <div class="sidebar-projects" aria-labelledby="sidebar-projects-title">
-        <h3 id="sidebar-projects-title">Projects</h3>
-        <a class="sidebar-project" href="https://speechgraphs.claudiopalominos.com/">
-          <strong>speech-graphs</strong>
-          <span>Interactive tool for graph-based analysis of referential structure</span>
-        </a>
-      </div>
+      <details class="sidebar-projects">
+        <summary id="sidebar-projects-title">Projects</summary>
+        <div class="sidebar-project-list" aria-labelledby="sidebar-projects-title">
+          <a class="sidebar-project" href="https://speechgraphs.claudiopalominos.com/">
+            <strong>speech-graphs</strong>
+            <span>Interactive tool for graph-based analysis of referential structure.</span>
+          </a>
+          <a class="sidebar-project" href="https://workstack.claudiopalominos.com/">
+            <strong>workstack</strong>
+            <span>Personal worklog for organizing focused work, tasks, and long-term projects.</span>
+          </a>
+        </div>
+      </details>
     </aside>
 
     <!-- Main -->
