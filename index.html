@@ -94,16 +94,48 @@
       display:flex;
       align-items:center;
       gap:10px;
-      padding:8px 4px;
+      padding:8px 10px;
       color:var(--text);
       text-decoration:none;
-      border-left:2px solid transparent;
+      border-radius:6px;
     }
     .navlinks a:hover,
     .navlinks a[aria-current="true"]{
       color:var(--primary);
-      border-left-color:var(--primary);
-      padding-left:10px;
+      background:rgba(31, 95, 139, .08);
+    }
+
+    .sidebar-projects{
+      margin-top:22px;
+      padding-top:18px;
+      border-top:1px solid var(--border);
+    }
+    .sidebar-projects h3{
+      margin:0 0 10px;
+      color:var(--muted);
+      font-size:.82rem;
+      font-weight:800;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+    .sidebar-project{
+      display:block;
+      padding:10px;
+      color:var(--text);
+      text-decoration:none;
+      border-radius:6px;
+    }
+    .sidebar-project:hover{
+      color:var(--primary);
+      background:rgba(31, 95, 139, .08);
+    }
+    .sidebar-project strong{ display:block; line-height:1.2; }
+    .sidebar-project span{
+      display:block;
+      margin-top:4px;
+      color:var(--muted);
+      font-size:.86rem;
+      line-height:1.35;
     }
 
     .social-icons a{
@@ -257,6 +289,14 @@
         <a href="#education"><i class="fa-regular fa-graduation-cap"></i> Education</a>
         <a href="#interests"><i class="fa-regular fa-heart"></i> Interests</a>
       </nav>
+
+      <div class="sidebar-projects" aria-labelledby="sidebar-projects-title">
+        <h3 id="sidebar-projects-title">Projects</h3>
+        <a class="sidebar-project" href="https://speechgraphs.claudiopalominos.com/">
+          <strong>speech-graphs</strong>
+          <span>Interactive tools for exploring speech structure through graph-based language analysis.</span>
+        </a>
+      </div>
     </aside>
 
     <!-- Main -->
@@ -341,6 +381,8 @@
           as a tracker for focused work and ongoing projects. It gradually evolved into a small personal system for organizing attention, 
           tasks, and long-term projects. Feel free to explore it, and if you discover an interesting use case, feature idea, or even 
           a problem with the workflow, I’d be very happy to hear your feedback.</p>
+        <p>I also maintain <a href="https://speechgraphs.claudiopalominos.com/">speech-graphs</a>, a compact project for visualizing
+          speech as graph structures and experimenting with computational measures of language organization.</p>
       </section>
 
     </main>
