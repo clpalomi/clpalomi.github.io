@@ -272,8 +272,12 @@
       margin:0 0 1.1rem;
       padding-left:.25rem;
     }
-    .pub-title{ font-weight:800; }
+    .pub-title{
+      display:block;
+      font-weight:800;
+    }
     .pub-meta{ color:var(--muted); }
+    .pub-meta strong{ color:var(--text); }
     .pub-links{
       display:inline-flex;
       gap:.5rem;
@@ -529,8 +533,14 @@
       }[char]));
     }
     function formatAuthors(list){
-      const s = (list || []).join(', ').trim().replace(/[.\s]+$/, '');
-      return s ? `${escapeHTML(s)}.` : '';
+      const authors = (list || []).map(author => {
+        const escaped = escapeHTML(author);
+        return author === 'Palominos, C.' || author === 'Claudio Palominos'
+          ? `<strong>${escaped}</strong>`
+          : escaped;
+      });
+      const s = authors.join(', ').trim().replace(/[.\s]+$/, '');
+      return s ? `${s}.` : '';
     }
     function formatVenue(pub){
       const parts = [];
