@@ -57,19 +57,19 @@
         width:var(--sidebar-w);
         overflow:visible;
       }
-      .sidebar-projects{ position:relative; }
       .sidebar-project-list{
-        position:absolute;
-        top:calc(100% + 10px);
-        left:0;
-        width:100%;
+        position:fixed;
+        top:var(--projects-popover-top, 340px);
+        left:calc(var(--sidebar-w) + 12px);
+        width:min(260px, calc(100vw - var(--sidebar-w) - 24px));
         margin-top:0;
         padding:6px;
+        text-align:left;
         background:var(--surface);
         border:1px solid var(--border);
         border-radius:10px;
         box-shadow:0 14px 34px rgba(31, 35, 40, .14);
-        z-index:10;
+        z-index:1000;
       }
     }
     
@@ -147,6 +147,9 @@
     }
     .sidebar-projects[open] summary::after{ content:"−"; }
     .sidebar-project-list{ margin-top:10px; }
+    @media (min-width: 992px){
+      .sidebar-project-list{ margin-top:0; }
+    }
     .sidebar-project{
       display:block;
       padding:10px;
@@ -463,6 +466,28 @@
           toggle();
         }
       });
+    })();
+
+    // Keep the desktop Projects popover outside the fixed sidebar and aligned near its trigger.
+    (function(){
+      const projects = document.querySelector('.sidebar-projects');
+      const summary = projects?.querySelector('summary');
+      if (!projects || !summary) return;
+
+      const positionProjectPopover = () => {
+        if (!window.matchMedia('(min-width: 992px)').matches) {
+          document.documentElement.style.removeProperty('--projects-popover-top');
+          return;
+        }
+        const rect = summary.getBoundingClientRect();
+        const top = Math.max(12, Math.min(rect.top - 6, window.innerHeight - 180));
+        document.documentElement.style.setProperty('--projects-popover-top', `${top}px`);
+      };
+
+      summary.addEventListener('click', () => requestAnimationFrame(positionProjectPopover));
+      window.addEventListener('resize', positionProjectPopover);
+      window.addEventListener('scroll', positionProjectPopover, { passive: true });
+      positionProjectPopover();
     })();
 
     // Sidebar current link highlighting (IntersectionObserver)
