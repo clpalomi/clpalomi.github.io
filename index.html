@@ -55,7 +55,21 @@
         left:0;
         bottom:0;
         width:var(--sidebar-w);
-        overflow:auto;
+        overflow:visible;
+      }
+      .sidebar-projects{ position:relative; }
+      .sidebar-project-list{
+        position:absolute;
+        top:calc(100% + 10px);
+        left:0;
+        width:100%;
+        margin-top:0;
+        padding:6px;
+        background:var(--surface);
+        border:1px solid var(--border);
+        border-radius:10px;
+        box-shadow:0 14px 34px rgba(31, 35, 40, .14);
+        z-index:10;
       }
     }
     
