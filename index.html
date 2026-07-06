@@ -216,7 +216,7 @@
       gap:12px;
       margin-top:16px;
     }
-    .origin-gallery.active.has-images{ display:grid; }
+    .origin-gallery.active{ display:grid; }
     .origin-gallery img{
       width:100%;
       aspect-ratio:4 / 3;
@@ -450,8 +450,7 @@
         const image = document.createElement('img');
         image.src = photo.src;
         image.alt = photo.alt;
-        image.loading = 'lazy';
-        image.addEventListener('load', () => gallery.classList.add('has-images'));
+        image.loading = 'eager';
         image.addEventListener('error', () => figure.remove());
         figure.appendChild(image);
         gallery.appendChild(figure);
