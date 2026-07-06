@@ -229,7 +229,31 @@
       font-size:.9rem;
       margin-top:6px;
     }
-
+    .education-gallery{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));
+      gap:14px;
+      margin-top:18px;
+      max-width:720px;
+    }
+    .education-gallery figure{
+      margin:0;
+    }
+    .education-gallery img{
+      width:100%;
+      aspect-ratio:4 / 3;
+      object-fit:cover;
+      border-radius:6px;
+      border:1px solid var(--border);
+    }
+    .education-gallery figcaption{
+      color:var(--muted);
+      font-size:.82rem;
+      line-height:1.35;
+      margin-top:5px;
+      text-align:center;
+    }
+    
 
     .publication-note{
       color:var(--muted);
@@ -398,17 +422,33 @@
           <div class="muted">Master in Theoretical and Applied Linguistics</div>
           <div class="muted">Excellent master's thesis · October 2018 – June 2019</div>
         </div>
-        <div>
         <div class="mb-4">
           <h5 class="mb-1">Universidad de Chile</h5>
           <div class="muted">Industrial Engineering</div>
           <div class="muted">Master in Applied Economics</div>
           <div class="muted">Graduated with highest distinction · March 2011 – December 2013 </div>
         </div>
-        <div>
         <div class="mb-4">
           <h5 class="mb-1">Universidad de Chile</h5>
           <div class="muted">Bachelor of Science in Engineering · 2006 – 2010 </div>
+        </div>
+        <div class="education-gallery" aria-label="Education campus photos">
+          <figure>
+            <img src="assets/img/upf_1.jpg" alt="Campus Poblenou at Universitat Pompeu Fabra" loading="lazy">
+            <figcaption>Campus Poblenou. Universitat Pompeu Fabra</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/img/upf_2.jpg" alt="Campus Poblenou at Universitat Pompeu Fabra" loading="lazy">
+            <figcaption>Campus Poblenou. Universitat Pompeu Fabra</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/img/beauchef_1.jpg" alt="Escuela de inJeniería Beauchef" loading="lazy">
+            <figcaption>Escuela de inJeniería (Beauchef)</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/img/beauchef_2.jpg" alt="Escuela de inJeniería Beauchef" loading="lazy">
+            <figcaption>Escuela de inJeniería (Beauchef)</figcaption>
+          </figure>
         </div>
       </section>
 
